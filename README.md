@@ -16,11 +16,12 @@ Em toda nossa jornada iremos utilizar uma máquina virtual, mas após a criaçã
 
 ## Baixando `.iso` do ubunto server
 
-Para baixar o ``.iso`` é muito simples, basta acessar o site oficial de download https://ubuntu.com/download/server` e clicar em "Download Ubuntu Server"
+Para baixar o `.iso` é muito simples, basta acessar o site oficial de download https://ubuntu.com/download/server e clicar em "Download Ubuntu Server"
 
 ![Captura de tela de 2023-03-18 14-47-23](https://user-images.githubusercontent.com/70353348/226124335-96c47bf8-fcf7-40c1-994e-fe983738a3cb.png)
 
-Após clicar no botão seu download será iniciado altomaticamente.
+---
+<span style="color:#dabd7d">-> Após clicar no botão seu download será iniciado automaticamente.<span>
 
 ![Captura de tela de 2023-03-18 14-51-15](https://user-images.githubusercontent.com/70353348/226125864-17f81e97-f82c-439d-ae95-8bb678c0df0d.png)
 
