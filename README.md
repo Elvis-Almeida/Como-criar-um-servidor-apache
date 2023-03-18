@@ -21,10 +21,12 @@ Para baixar o `.iso` é muito simples, basta acessar o site oficial de download 
 ![Captura de tela de 2023-03-18 14-47-23](https://user-images.githubusercontent.com/70353348/226124335-96c47bf8-fcf7-40c1-994e-fe983738a3cb.png)
 
 ---
-<span style="color:#dabd7d">-> Após clicar no botão seu download será iniciado automaticamente.<span>
+Após clicar no botão seu download será iniciado automaticamente.
 
 ![Captura de tela de 2023-03-18 14-51-15](https://user-images.githubusercontent.com/70353348/226125864-17f81e97-f82c-439d-ae95-8bb678c0df0d.png)
 
+## Criando máquina virtual 
 
+Agora que já temos o `.iso` vamos criar nossa maquina virtual, basta clicar em **Novo** 
 ![Captura de tela de 2023-03-18 15-03-38](https://user-images.githubusercontent.com/70353348/226125907-5a4ffd38-3f7c-4573-9467-1d90298dc66f.png)
 
