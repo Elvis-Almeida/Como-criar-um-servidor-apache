@@ -4,7 +4,7 @@
 
 Essa wiki documenta todas as etapas de implementação de um servidor apache proposto pelo professor [Paulo Henrique Sousa Barbosa](https://github.com/agenteph) na disciplina de Redes II do curso de Ciência da Computação do Instituto Federal de Educação, Ciência e Tecnologia do Maranhão - Campus Imperatriz (IFMA). Projeto implementado por [Elvis Rodrigues Almeida](https://github.com/Elvis-Almeida)
 
-Em toda nossa jornada iremos utilizar uma máquina virtual, mas após a criação da máquina virtual e execução do .iso todo o resto será igual a um computador real após a execução do pen-drive bootável. Irei considerar que você saiba criar e executar um pen-drive bootável *(caso queira instalar em seu computador físico)* e também instalar o [VitualBox](https://www.virtualbox.org/) em seu PC, mas se você não tem esse conhecimento de como fazer, aqui estão alguns links que te ajudaram nisso:
+Em toda nossa jornada iremos utilizar uma máquina virtual, mas após a criação da máquina virtual e execução do `.iso` todo o resto será igual a um computador real após a execução do pen-drive bootável. Irei considerar que você saiba criar e executar um pen-drive bootável *(caso queira instalar em seu computador físico)* e também instalar o [VitualBox](https://www.virtualbox.org/) em seu PC, mas se você não tem esse conhecimento de como fazer, aqui estão alguns links que te ajudaram nisso:
 
 >  [VirtualBox: Saiba o que é, como funciona e como instalar!](https://blog.b2bstack.com.br/virtualbox/)
 
@@ -14,9 +14,9 @@ Em toda nossa jornada iremos utilizar uma máquina virtual, mas após a criaçã
 
 # Instalando servidor :rocket:
 
-## Baixando .iso do ubunto server
+## Baixando `.iso` do ubunto server
 
-Para baixar o `.iso` é muito simples, basta acessar o site oficial de download https://ubuntu.com/download/server` e clicar em "Download Ubuntu Server"
+Para baixar o ``.iso`` é muito simples, basta acessar o site oficial de download https://ubuntu.com/download/server` e clicar em "Download Ubuntu Server"
 
 ![Captura de tela de 2023-03-18 14-47-23](https://user-images.githubusercontent.com/70353348/226124335-96c47bf8-fcf7-40c1-994e-fe983738a3cb.png)
 
