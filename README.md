@@ -12,10 +12,7 @@ Em toda nossa jornada iremos utilizar uma máquina virtual, mas após a criaçã
 
 > [Como dar boot no computador pelo pendrive](https://tecnoblog.net/responde/boot-pen-drive-windows-mac/). 
 
-# Instalando servidor 
-
-:rocket:
-
+# Instalando servidor :rocket:
 
 ## Baixando .iso do ubunto server
 
