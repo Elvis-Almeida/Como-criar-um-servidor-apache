@@ -1,4 +1,4 @@
-![sync b759ed7a](https://user-images.githubusercontent.com/70353348/226113776-0b6a09c2-8bfd-45f8-bca2-b0f4fd04ec61.gif)
+![intro](https://user-images.githubusercontent.com/70353348/226114161-a56a0475-c383-4d3d-9add-b48a8a57287e.gif)
 
 # Introdução
 
