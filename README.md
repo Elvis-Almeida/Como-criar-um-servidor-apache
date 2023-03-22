@@ -144,3 +144,25 @@ Se tudo estiver Ok você estará logado em seu servidor.
 ![Captura de tela de 2023-03-21 22-05-59](https://user-images.githubusercontent.com/70353348/226784037-b891ecf8-2ff4-434c-9f8d-6be9eab83dd6.png)
 
 # Utilitários e configurações 
+
+## Atualizando bibliotecas
+
+Agora podemos voltar na configuração de rede da maquina vitual e selecionar a caixa *Cabo conectado* para podermos usar internet no computador virtual.
+
+![Captura de tela de 2023-03-21 22-33-43](https://user-images.githubusercontent.com/70353348/226785748-b9e5d00b-20e4-4c9c-885d-3518c1e7031b.png)
+
+Vamos sempre está em modo **root** no servidor para fazer todas as configurações apartir de agora. para entrar nesse modo basta digitar o comando `sudo su` e depois digitar a senha.
+
+![Captura de tela de 2023-03-21 22-32-31](https://user-images.githubusercontent.com/70353348/226785746-ad0f279b-c072-4cdf-a693-0a2e24d41efd.png)
+
+Para atualizarmos as bibliotecas é só digitar o comando `apt update && apt upgrade` para baixar e atualizar.
+
+![Captura de tela de 2023-03-21 22-34-51](https://user-images.githubusercontent.com/70353348/226785751-9128581c-1c1b-4c64-b6cf-75dc98750a24.png)
+
+Ele irá perguntar se deseja continuar, é só digitar **y** e apetar **Enter**
+
+![Captura de tela de 2023-03-21 22-39-54](https://user-images.githubusercontent.com/70353348/226785755-9d7718e8-20a1-4520-81f6-26e2f16c0749.png)
+
+Após isso vamos reiniciar nosso servidor digitando o comando `reboot`
+
+![Captura de tela de 2023-03-21 23-22-43](https://user-images.githubusercontent.com/70353348/226785757-d3cd3d7c-679e-4196-a2f3-bfecc5654f58.png)
