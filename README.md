@@ -166,3 +166,63 @@ Ele irá perguntar se deseja continuar, é só digitar **y** e apetar **Enter**
 Após isso vamos reiniciar nosso servidor digitando o comando `reboot`
 
 ![Captura de tela de 2023-03-21 23-22-43](https://user-images.githubusercontent.com/70353348/226785757-d3cd3d7c-679e-4196-a2f3-bfecc5654f58.png)
+
+## Instalando utilitários 
+
+Nessa parte vamos instalar algums utilitários que usaremos durante a instalação do apache, para isso utilizaremos o código `apt install nano inetutils-ping net-tools ip-tables iptraf-ng man-db openssh-server zip` que intalará todo o que precisamos por enguanto.
+
+![Captura de tela de 2023-03-22 16-35-47](https://user-images.githubusercontent.com/70353348/228021137-698c62b3-6d4a-4763-9b43-52bd0c1228de.png)
+
+## Configurando SSH
+
+Para configurarmos o SSH vamos nesse arquivo de configuração digitando o código `nano /etc/ssh/sshd_config`
+
+![Captura de tela de 2023-03-23 14-52-59](https://user-images.githubusercontent.com/70353348/228023358-573c8db9-ec0b-45d1-aee8-722cf1342d04.png)
+
+Após entrar no arquivo irá ter uma linha escrita `#Port 22` você irá escrever apenas apagar a `#` e colocar a porta em que deseje utilizar o serviço, lembre-se de não utilizar 2 serviços na mesma porta, no meu caso coloquei na porta 222 como está na imagem.
+
+![Captura de tela de 2023-03-23 14-55-08](https://user-images.githubusercontent.com/70353348/228025851-3093e86c-132e-42dd-beac-1079746ab00e.png)
+
+![Captura de tela de 2023-03-23 14-53-42](https://user-images.githubusercontent.com/70353348/228024113-04fec54f-67f1-4933-8746-96e5a3990cac.png)
+
+Aperte **Ctrl+O** e depois **Enter** para salvar o aquivo e depois de salvo **Ctrl+X** para sair do arquivo 
+
+Vamos reiniciar o serviço SSH para aplicar as configurações corretamente, para isso digitaremos o comando `/etc/init.d/ssh restart`
+
+![Captura de tela de 2023-03-23 14-56-31](https://user-images.githubusercontent.com/70353348/228026781-b818e2c0-d85a-48ce-8697-e3584a8259c3.png)
+
+Para sabermos se tudo está correndo de forma certa após reiniciarmos vamos digitar o comando `/etc/init.d/ssh status`
+
+![Captura de tela de 2023-03-23 14-56-43](https://user-images.githubusercontent.com/70353348/228027455-f67dc8f7-7e6e-4709-a162-04ae47a1709b.png)
+
+Vemos que está funcionando corretamente 
+
+## Acessando servidor via SSH
+
+Para conectar precisamos saber o IP do servidor, para isso vamos digitar o comando `ifconfig`
+
+![Captura de tela de 2023-03-23 15-07-02](https://user-images.githubusercontent.com/70353348/228029266-e3ae6465-2972-4a07-8902-4a83fb982555.png)
+
+Vemos aqui que o IP do servidor é *192.168.43.227*
+
+Após configurarmos o serviço SSH e pegarmos o IP podemos agora acessar nosso servidor apartir de outro computador, agora irei utilizar somente o terminal do meu computador real. Para acessar o SSH vamos digitar o seguinte comando `ssh nome_do_servidor@ip_do_servidor -p porta`, no meu caso ficou `ssh servidorifma@192.168.43.227 -p 222`
+
+![Captura de tela de 2023-03-23 15-08-41](https://user-images.githubusercontent.com/70353348/228029921-7866777b-7d34-4793-8535-70ac17377281.png)
+
+Digite `y` e aperte `Enter`
+
+![Captura de tela de 2023-03-23 15-08-51](https://user-images.githubusercontent.com/70353348/228029929-31287ce8-9a30-49a8-b4ba-96886d2273f6.png)
+
+Digite a senha do seu servidor 
+
+![Captura de tela de 2023-03-23 15-08-57](https://user-images.githubusercontent.com/70353348/228029931-f93fbe15-6e33-471c-a4a3-03b5a6c49814.png)
+
+Agora vocẽ está conectado via SSH ao terminal do seu servidor
+
+![Captura de tela de 2023-03-23 15-09-04](https://user-images.githubusercontent.com/70353348/228031335-5fc47ff5-bd6c-44be-a2e9-701c5bd2e8b1.png)
+
+# Instalando Apache 
+
+Agora podemos instalar o apache Lembrando que todo comando será feito em usuário root
+
+![Captura de tela de 2023-03-23 15-11-38](https://user-images.githubusercontent.com/70353348/228032706-9ddf0e75-84ad-41b9-8816-db7064b75094.png)
