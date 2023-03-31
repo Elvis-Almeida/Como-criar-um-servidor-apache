@@ -252,4 +252,7 @@ O Apache é um software de servidor web que é utilizado para hospedar sites, ap
 Vamos instalar o apache 
 > :warning: Lembrando que todos os comandos seram feitos em usuário root
 
+Para isso vamos digitar o comando `apt install apache2 apache2-doc` que baixará e instalará o apache e a documentação do mesmo
+
 ![Captura de tela de 2023-03-23 15-11-38](https://user-images.githubusercontent.com/70353348/228032706-9ddf0e75-84ad-41b9-8816-db7064b75094.png)
+
