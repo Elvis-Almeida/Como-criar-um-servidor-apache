@@ -83,31 +83,31 @@ Quando iniciar aparecerá essa tela, nesse momento é só selecionar a primeira 
 
 ![Captura de tela de 2023-03-21 21-50-23](https://user-images.githubusercontent.com/70353348/226779184-242633d8-35f2-478b-b347-05095118a295.png)
 
-Selecione o idioma e aperte **Enter**
+Aqui você pode escolher o idioma. Aperte **Enter** para continuar
 
 ![Captura de tela de 2023-03-21 21-51-16](https://user-images.githubusercontent.com/70353348/226779458-0e9d69d4-9da4-4ab1-9d44-170b90260fd0.png)
 
-Selecione o idioma do teclado e aperte em **Concluído**
+Aqui você pode selecionar o idioma do teclado. Aperte em **Concluído**
 
 ![Captura de tela de 2023-03-21 21-52-14](https://user-images.githubusercontent.com/70353348/226782227-3b948dd9-05a1-4e6e-be20-61c9eb552fe2.png)
 
-Selecione *Ubuntu server (minimized)* pois vamos instalar a versão minimizada do sistema e aperte em **Concluído**
+Nessa parte mostra qual tipo de instalação você quer fazer. Selecione *Ubuntu server (minimized)* pois vamos instalar a versão minimizada do sistema e aperte em **Concluído**
 
 ![Captura de tela de 2023-03-21 21-52-25](https://user-images.githubusercontent.com/70353348/226782229-af819237-d418-4c3e-9317-f921c1c4518b.png)
 
-Aperte em **Contunuar sem rede**
+Nessa parte mostra as entradas de rede. Como desativamos a rede aperte em **Contunuar sem rede**
 
 ![Captura de tela de 2023-03-21 21-56-36](https://user-images.githubusercontent.com/70353348/226782232-c4eb8acd-eee3-46fd-9db7-bd9aaf16d4d0.png)
 
-Aperte em **Concluído**
+Nessa parte é a configuração de proxy mas como não iremos utilizar agora aperte em **Concluído**
 
 ![Captura de tela de 2023-03-21 21-56-44](https://user-images.githubusercontent.com/70353348/226782234-3a6a2723-e0b3-4c06-b54e-a79a4fe4354d.png)
 
-Aperte em **Concluído**
+Aqui você pode apertar em **Concluído**
 
 ![Captura de tela de 2023-03-21 21-56-51](https://user-images.githubusercontent.com/70353348/226782237-99dce6ef-fb71-4c89-81fd-fb5c5a1f40ca.png)
 
-Aperte em **Concluído**
+Nessa parte também você aperte em **Concluído**
 
 ![Captura de tela de 2023-03-21 21-57-03](https://user-images.githubusercontent.com/70353348/226782238-1277eb33-506f-4808-982f-06269c203261.png)
 
@@ -115,27 +115,27 @@ Aqui mostra um resumo das configurações, aperte em **Concluído**
 
 ![Captura de tela de 2023-03-21 21-57-08](https://user-images.githubusercontent.com/70353348/226782240-2d2119f2-eaec-4e59-8906-b19c9c870912.png)
 
-Aqui é só apertar em **Continue**
+Aqui é só uma caixa de confirmação pois após continuar não será mais possível retornar as configurações anteriores, aperte em **Continue**
 
 ![Captura de tela de 2023-03-21 21-57-16](https://user-images.githubusercontent.com/70353348/226782244-4ac03b71-f1a5-4abe-a32c-a20118a47c14.png)
 
-Nessa tela você colocará os nomes e senha do seu servidor (*Não esqueça do usuário e nem da senha*), aperte em **Concluído**
+Nessa tela você colocará os nomes de servidor de usuario e de utilizador e a senha do seu servidor (*Não esqueça do nome do utilizador e nem da senha, pois você fará o login com eles*), aperte em **Concluído**
 
 ![Captura de tela de 2023-03-21 21-58-51](https://user-images.githubusercontent.com/70353348/226782247-d649147a-db61-45ab-8e13-13287108565f.png)
 
-Aperte em **Continue**
+Aqui pergunta se você quer fazer o upgrade para ubunto pro, mas você pode pular apertando em **Continue**
 
 ![Captura de tela de 2023-03-21 21-59-00](https://user-images.githubusercontent.com/70353348/226782249-867ea921-e5af-43ec-923a-dbb010803fd5.png)
 
-Aperte em **Concluído**
+Aqui pergunta se você quer instalar SSH, você pode continuar sem instalar pois instalaremos esse serviço mais tarde. Aperte em **Concluído**
 
 ![Captura de tela de 2023-03-21 21-59-11](https://user-images.githubusercontent.com/70353348/226782250-22c7610b-2ef2-4ecd-9704-273ef835f22d.png)
 
-Nessa parte ele será instalado e caso a instalação ocorra com sucesso é só apertar em **Reboot Now** para reiniar o servidor.
+Nessa parte o sistema operacional será instalado e caso a instalação ocorra com sucesso é só apertar em **Reboot Now** para reiniar o servidor.
 
 ![Captura de tela de 2023-03-21 21-59-18](https://user-images.githubusercontent.com/70353348/226782252-a94d98c6-83bd-4ac2-97a1-8c25671c0654.png)
 
-Após reiniciar o servidor será apresentado essa tela no qual você colocará seu usuário e senha.
+Após reiniciar o servidor será apresentado essa tela no qual você colocará seu usuário e senha (*agora você pode fazer o login no sistema com o usuario e a senha que criou anteriormente*).
 
 ![Captura de tela de 2023-03-21 22-05-36](https://user-images.githubusercontent.com/70353348/226784035-06cb94e8-c170-43da-8dfd-c308b32a6aca.png)
 
@@ -151,7 +151,7 @@ Agora podemos voltar na configuração de rede da maquina vitual e selecionar a 
 
 ![Captura de tela de 2023-03-21 22-33-43](https://user-images.githubusercontent.com/70353348/226785748-b9e5d00b-20e4-4c9c-885d-3518c1e7031b.png)
 
-Vamos sempre está em modo **root** no servidor para fazer todas as configurações apartir de agora. para entrar nesse modo basta digitar o comando `sudo su` e depois digitar a senha.
+> :warning: Vamos sempre está em modo **root** no servidor para fazer todas as configurações apartir de agora. para entrar nesse modo basta digitar o comando `sudo su` e depois digitar a senha.
 
 ![Captura de tela de 2023-03-21 22-32-31](https://user-images.githubusercontent.com/70353348/226785746-ad0f279b-c072-4cdf-a693-0a2e24d41efd.png)
 
