@@ -151,7 +151,9 @@ Agora podemos voltar na configuração de rede da maquina vitual e selecionar a 
 
 ![Captura de tela de 2023-03-21 22-33-43](https://user-images.githubusercontent.com/70353348/226785748-b9e5d00b-20e4-4c9c-885d-3518c1e7031b.png)
 
-> :warning: Vamos sempre está em modo **root** no servidor para fazer todas as configurações apartir de agora. para entrar nesse modo basta digitar o comando `sudo su` e depois digitar a senha.
+> :warning: Vamos sempre está em modo **root** apartir de agora 
+
+Para entrar nesse modo basta digitar o comando `sudo su` e depois digitar a senha.
 
 ![Captura de tela de 2023-03-21 22-32-31](https://user-images.githubusercontent.com/70353348/226785746-ad0f279b-c072-4cdf-a693-0a2e24d41efd.png)
 
@@ -159,33 +161,51 @@ Para atualizarmos as bibliotecas é só digitar o comando `apt update && apt upg
 
 ![Captura de tela de 2023-03-21 22-34-51](https://user-images.githubusercontent.com/70353348/226785751-9128581c-1c1b-4c64-b6cf-75dc98750a24.png)
 
-Ele irá perguntar se deseja continuar, é só digitar **y** e apetar **Enter**
+Ele irá perguntar se deseja continuar, é só digitar **y** e apetar **Enter**. É só aguardar atualizar que estará tudo pronto
 
 ![Captura de tela de 2023-03-21 22-39-54](https://user-images.githubusercontent.com/70353348/226785755-9d7718e8-20a1-4520-81f6-26e2f16c0749.png)
-
-Após isso vamos reiniciar nosso servidor digitando o comando `reboot`
-
-![Captura de tela de 2023-03-21 23-22-43](https://user-images.githubusercontent.com/70353348/226785757-d3cd3d7c-679e-4196-a2f3-bfecc5654f58.png)
 
 ## Instalando utilitários 
 
 Nessa parte vamos instalar algums utilitários que usaremos durante a instalação do apache, para isso utilizaremos o código `apt install nano inetutils-ping net-tools ip-tables iptraf-ng man-db openssh-server zip` que intalará todo o que precisamos por enguanto.
 
+nesse comando instalaremos as seguites bibliotecas:
+
+**Nano**: é um editor de texto simples e fácil de usar, com recursos básicos como edição, busca e substituição de texto.
+
+**Inetutils-ping**: é uma ferramenta que permite testar a conectividade da rede, enviando pacotes de dados para um endereço IP e esperando por uma resposta.
+
+**Net-tools**: é um conjunto de ferramentas de rede que inclui comandos como ifconfig, route e netstat, que permitem visualizar informações de rede, como endereços IP, rotas e conexões abertas.
+
+**Ip-tables**: é um utilitário de linha de comando para gerenciamento de firewall, que permite bloquear ou permitir o tráfego de rede com base em regras definidas pelo usuário.
+
+**Iptarf-ng**: é uma ferramenta de monitoramento de rede que exibe informações em tempo real sobre o tráfego de rede em uma interface gráfica do usuário.
+
+**Man-db**: é um sistema de gerenciamento de manuais de usuário do Linux, que permite visualizar informações detalhadas sobre comandos e programas do sistema.
+
+**OpenSSH-server**: é um servidor de protocolo SSH que permite o acesso remoto seguro a um computador ou servidor Linux.
+
+**Zip**: é uma ferramenta de compactação de arquivos que permite criar, extrair e manipular arquivos ZIP.
+
 ![Captura de tela de 2023-03-22 16-35-47](https://user-images.githubusercontent.com/70353348/228021137-698c62b3-6d4a-4763-9b43-52bd0c1228de.png)
 
 ## Configurando SSH
+
+> :warning: Todas as configurações no linux são arquivos 
 
 Para configurarmos o SSH vamos nesse arquivo de configuração digitando o código `nano /etc/ssh/sshd_config`
 
 ![Captura de tela de 2023-03-23 14-52-59](https://user-images.githubusercontent.com/70353348/228023358-573c8db9-ec0b-45d1-aee8-722cf1342d04.png)
 
-Após entrar no arquivo irá ter uma linha escrita `#Port 22` você irá escrever apenas apagar a `#` e colocar a porta em que deseje utilizar o serviço, lembre-se de não utilizar 2 serviços na mesma porta, no meu caso coloquei na porta 222 como está na imagem.
+Após entrar no arquivo irá ter uma linha escrita `#Port 22` você irá apenas apagar a `#` e colocar a porta em que deseje utilizar o serviço, lembre-se de não utilizar 2 serviços na mesma porta, no meu caso coloquei na porta 222 como está na imagem.
 
 ![Captura de tela de 2023-03-23 14-55-08](https://user-images.githubusercontent.com/70353348/228025851-3093e86c-132e-42dd-beac-1079746ab00e.png)
 
 ![Captura de tela de 2023-03-23 14-53-42](https://user-images.githubusercontent.com/70353348/228024113-04fec54f-67f1-4933-8746-96e5a3990cac.png)
 
 Aperte **Ctrl+O** e depois **Enter** para salvar o aquivo e depois de salvo **Ctrl+X** para sair do arquivo 
+
+> :warning: Nunca esqueça de salvar o arquivo após editar, caso contrario será perdido toda modificação.
 
 Vamos reiniciar o serviço SSH para aplicar as configurações corretamente, para isso digitaremos o comando `/etc/init.d/ssh restart`
 
@@ -205,11 +225,11 @@ Para conectar precisamos saber o IP do servidor, para isso vamos digitar o coman
 
 Vemos aqui que o IP do servidor é *192.168.43.227*
 
-Após configurarmos o serviço SSH e pegarmos o IP podemos agora acessar nosso servidor apartir de outro computador, agora irei utilizar somente o terminal do meu computador real. Para acessar o SSH vamos digitar o seguinte comando `ssh nome_do_servidor@ip_do_servidor -p porta`, no meu caso ficou `ssh servidorifma@192.168.43.227 -p 222`
+Após configurarmos o serviço SSH e pegarmos o IP podemos agora acessar nosso servidor apartir de outro computador, agora irei utilizar somente o terminal do meu computador real. Para acessar o SSH vamos digitar o seguinte comando na maquina que vai se conectar com o servidor `ssh nome_do_servidor@ip_do_servidor -p porta`, no meu caso ficou `ssh servidorifma@192.168.43.227 -p 222`
 
 ![Captura de tela de 2023-03-23 15-08-41](https://user-images.githubusercontent.com/70353348/228029921-7866777b-7d34-4793-8535-70ac17377281.png)
 
-Digite `y` e aperte `Enter`
+Digite `yes` e aperte `Enter`
 
 ![Captura de tela de 2023-03-23 15-08-51](https://user-images.githubusercontent.com/70353348/228029929-31287ce8-9a30-49a8-b4ba-96886d2273f6.png)
 
@@ -223,6 +243,13 @@ Agora vocẽ está conectado via SSH ao terminal do seu servidor
 
 # Instalando Apache 
 
-Agora podemos instalar o apache Lembrando que todo comando será feito em usuário root
+## Sobre o apache
+
+O Apache é um software de servidor web que é utilizado para hospedar sites, aplicativos e serviços na Internet, ele oferece uma ampla variedade de recursos avançados, como suporte a múltiplos domínios e endereços IP, balanceamento de carga, segurança e controle de acesso e é altamente configurável e extensível, permitindo que você personalize a configuração para atender às necessidades específicas do seu projeto
+
+## Baixando e instalando 
+
+Vamos instalar o apache 
+> :warning: Lembrando que todos os comandos seram feitos em usuário root
 
 ![Captura de tela de 2023-03-23 15-11-38](https://user-images.githubusercontent.com/70353348/228032706-9ddf0e75-84ad-41b9-8816-db7064b75094.png)
