@@ -256,3 +256,28 @@ Para isso vamos digitar o comando `apt install apache2 apache2-doc` que baixará
 
 ![Captura de tela de 2023-03-23 15-11-38](https://user-images.githubusercontent.com/70353348/228032706-9ddf0e75-84ad-41b9-8816-db7064b75094.png)
 
+Após a instalação se ocorrer tudo certo você poderá escrever o ip do seu servidor no navegador que será apresentado uma página como esta.
+
+![Captura de tela de 2023-03-23 15-12-49](https://user-images.githubusercontent.com/70353348/229310284-d0a6d24d-7039-441a-8a39-fbf7b0b9c30a.png)
+
+## Comfigurando
+
+Antes de configurar vamos na pasta onde está as configurações do apache digitando `cd /etc/apache2` e depois `ls` para listar.
+
+![Captura de tela de 2023-03-23 15-14-37](https://user-images.githubusercontent.com/70353348/229371040-a067301c-da8d-4008-bc05-441de0efb074.png)
+
+São nesses arquivos e pastas que vamos configurar o apache esses arquivos e pastas são:
+
+**apache2.conf**: Este é o arquivo de configuração principal do Apache. Ele define as configurações globais do servidor, como o diretório raiz do servidor, os módulos carregados e as opções de log.
+
+**ports.conf**: Este arquivo define as portas nas quais o servidor web Apache escuta as conexões.
+
+**sites-available** e **sites-enabled**: Essas pastas contêm arquivos de configuração que definem os sites virtuais que o Apache pode servir. O diretório sites-available contém os arquivos de configuração para todos os sites virtuais disponíveis, enquanto o diretório sites-enabled contém links simbólicos para os arquivos de configuração que estão ativos.
+
+**mods-available** e **mods-enabled**: Essas pastas contêm arquivos de configuração que definem os módulos do Apache que estão disponíveis e habilitados. O diretório mods-available contém os arquivos de configuração para todos os módulos disponíveis, enquanto o diretório mods-enabled contém links simbólicos para os arquivos de configuração dos módulos habilitados.
+
+**envvars**: Este arquivo define as variáveis de ambiente usadas pelo Apache, como o usuário e o grupo sob os quais o servidor é executado.
+
+**conf-available** e **conf-enabled**: Essas pastas contêm arquivos de configuração que são usados para definir opções globais do servidor ou módulos que não têm um arquivo de configuração dedicado. O diretório conf-available contém os arquivos de configuração para todas as opções globais ou módulos disponíveis, enquanto o diretório conf-enabled contém links simbólicos para os arquivos de configuração que estão ativos.
+
+**magic**: é um arquivo de especificações de formato de arquivo usado pelo Apache e outros utilitários para determinar o tipo de conteúdo de um arquivo com base em seu conteúdo.
