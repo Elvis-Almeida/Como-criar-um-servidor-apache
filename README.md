@@ -574,7 +574,7 @@ Em **ShowSymLinks** vamos deixar off, essa configuração determina se os links 
 
 ![image](https://user-images.githubusercontent.com/70353348/229396228-d81eb931-ddd9-404c-b29f-0f305073c05a.png)
 
-Vamos descomentar as configurações **DefaultRoot ~** e **RequireValidShell off**, sendo que o **DefaultRoot** define o diretório inicial padrão para o usuário FTP após o login, no nosso caso o **~** representa o diretório home do usuário, onde após o login, o usuário será direcionado para o seu diretório home no servidor que no nosso caso será o **/home/usuarioftp1** já o **RequireValidShell off** define se o ProFTPD permiti que usuários com um shell inválido façam login no servidor FTP, como o valor que colocamos é off isso permite que qualquer usuário faça login, mesmo que o shell listado em /etc/passwd seja inválido.
+Vamos descomentar as configurações **DefaultRoot~** e **RequireValidShell off**, sendo que o **DefaultRoot** define o diretório inicial padrão para o usuário FTP após o login, no nosso caso o **~** representa o diretório home do usuário, onde após o login, o usuário será direcionado para o seu diretório home no servidor que no nosso caso será o **/home/usuarioftp1** já o **RequireValidShell off** define se o ProFTPD permiti que usuários com um shell inválido façam login no servidor FTP, como o valor que colocamos é off isso permite que qualquer usuário faça login, mesmo que o shell listado em /etc/passwd seja inválido.
 
 ![Captura de tela de 2023-04-02 23-15-03](https://user-images.githubusercontent.com/70353348/229396472-fc333883-28d6-4707-96ad-335e2ba078ec.png)
 ![Captura de tela de 2023-04-02 23-15-24](https://user-images.githubusercontent.com/70353348/229396476-71330164-3359-44ba-afe0-0e773ce5130a.png)
