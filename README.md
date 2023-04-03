@@ -564,52 +564,87 @@ Para baixar e instalar basta digitar esse código `apt install proftpd` que baix
 
 ## Configurando
 
-Para confirarmos vamos primeiro á esse arquivo `/etc/proftpd/proftpd.conf` vamos primeiro trocar o nome do servidor de **Debian** para **elvis**
+Para confirarmos vamos primeiro á esse arquivo `/etc/proftpd/proftpd.conf` nele vamos primeiro trocar o nome do servidor de **Debian** para **elvis**
 
 
 ![Captura de tela de 2023-04-02 23-09-47](https://user-images.githubusercontent.com/70353348/229396057-930dac83-e253-4355-9bf9-6b9a0f5eb329.png)
 ![Captura de tela de 2023-04-02 23-10-00](https://user-images.githubusercontent.com/70353348/229396065-6234024e-2072-452e-861f-c73a3cb18796.png)
 
-Em **ShowSymLinks** vamos deixar off
+Em **ShowSymLinks** vamos deixar off, essa configuração determina se os links do sistema aparecem ou não para o usuário, nesse caso queremos que não apareça
 
 ![image](https://user-images.githubusercontent.com/70353348/229396228-d81eb931-ddd9-404c-b29f-0f305073c05a.png)
 
-Vamos descomentar as configurações **DefaultRoot ~** e **RequireValidShell off**
+Vamos descomentar as configurações **DefaultRoot ~** e **RequireValidShell off**, sendo que o **DefaultRoot** define o diretório inicial padrão para o usuário FTP após o login, no nosso caso o **~** representa o diretório home do usuário, onde após o login, o usuário será direcionado para o seu diretório home no servidor que no nosso caso será o **/home/usuarioftp1** já o **RequireValidShell off** define se o ProFTPD permiti que usuários com um shell inválido façam login no servidor FTP, como o valor que colocamos é off isso permite que qualquer usuário faça login, mesmo que o shell listado em /etc/passwd seja inválido.
 
 ![Captura de tela de 2023-04-02 23-15-03](https://user-images.githubusercontent.com/70353348/229396472-fc333883-28d6-4707-96ad-335e2ba078ec.png)
 ![Captura de tela de 2023-04-02 23-15-24](https://user-images.githubusercontent.com/70353348/229396476-71330164-3359-44ba-afe0-0e773ce5130a.png)
 
-E no final do arquivo as configurações **TransferRate RETR 30:100** e **RootLogin Off**
+E no final do arquivo vamos adicionar as configurações **TransferRate RETR 30:100** e **RootLogin Off** onde o **TransferRate RETR 30:100** define o limite de taxa de transferência de download para os arquivos, no nosso caso, o limite é definido como sendo de 30 a 100 KB/s. já o **RootLogin Off** desabilita o login de usuários com o usuário root, faremos isso para melhor segurança. 
 
 ![Captura de tela de 2023-04-02 23-19-58](https://user-images.githubusercontent.com/70353348/229397311-1a7ac3a8-95cb-458e-9bca-d03bf40db352.png)
 
-Vamos criar um usuário, para poder usar o ftp, com o comando `adduser usuarioftp1`
+> :warning: Salve, reinicie e verifique o status
+
+![image](https://user-images.githubusercontent.com/70353348/229621655-5650497a-4a17-435d-83d4-2beec2101ecd.png)
+
+Após configuramos essa parte vamos criar um usuário, para poder usar o ftp com ele, para criar um usuário é só digitar o comando `adduser nome_do_usuário` e logo após digitar e senha (*não esqueça a senha!*)
 
 ![image](https://user-images.githubusercontent.com/70353348/229397732-c022c62f-29a5-45a8-8402-55ae8446d374.png)
 
-Agora vamos modificar o seguinte arquivo `/etc/passwd` modificando as pastas do usuário que acabamos de criar para ficar assim `/home/usuarioftp1/ftp` e `/usr/sbin/nologin`
+Após isso aparecerá um breve formulário para preencher, ele é opicional, eu não preenchi e pulei apenas apertando `Enter`
 
-![Captura de tela de 2023-04-02 23-28-29](https://user-images.githubusercontent.com/70353348/229398041-c5d8de58-2732-496c-89b2-e34664b4a810.png)
+---
+
+Agora vamos modificar o seguinte arquivo `/etc/passwd` (*Muito cuidado ao mexer nessa configuração pois você pode perder o acesso ao servidor permanentimente, modifique somente o usuário que criou*) vamos modificar a pasta do usuário que acabamos de criar para ficar assim `/home/usuarioftp1/ftp` e a pasta do shell para `/usr/sbin/nologin` por isso colocamos o **RequireValidShell** em **off**
+
 ![Captura de tela de 2023-04-02 23-28-39](https://user-images.githubusercontent.com/70353348/229398049-43ce8e89-11e6-4872-bbc2-c74e9ebc0f98.png)
+![Captura de tela de 2023-04-02 23-28-29](https://user-images.githubusercontent.com/70353348/229398041-c5d8de58-2732-496c-89b2-e34664b4a810.png)
 
-Agora vamos criar a pasta ftp do usuario, vamos na pasta home e no usuarioftp1 e digitamos mkdir ftp para criar a pasta
+Agora vamos criar a pasta ftp já que definimos anteriormente a pasta do usuário como `/home/usuarioftp1/ftp`, para isso vamos na pasta `/home` e no usurario que é o **usuarioftp1** em `/home/usuarioftp1` e estando nela digitamos `mkdir ftp` para criar a pasta **ftp**
 
 ![Captura de tela de 2023-04-02 23-33-49](https://user-images.githubusercontent.com/70353348/229399004-a18c127c-dfed-46bd-a780-71bee6713a40.png)
 ![Captura de tela de 2023-04-02 23-33-55](https://user-images.githubusercontent.com/70353348/229399009-0455b001-3e0c-4b40-8cec-55c35551c4bc.png)
 
-Agora vamos mudar as permissões da pasta com os comandos `chown usuarioftp1:usuarioftp1 ftp` e `chmod 770 ftp`
+> :warning: Salve, reinicie e verifique o status
+
+Agora vamos mudar as permissões da pasta com os comandos `chown usuarioftp1:usuarioftp1 ftp` que troca o usuário da pasta **ftp** para o **usuarioftp1** pois como criamos ela com usuário root ela estava com permição apenas para o nosso usuário, e o `chmod 770 ftp` esse comando  modifica permissões de acesso a um arquivo ou diretório onde os numeros significam:
+
+No primeiro dígito **7** define as permissões do proprietário do arquivo. No nosso caso o **7** significa que esse usuário pode ler, gravar e executar.
+
+No segundo dígito **7** define as permissões do grupo proprietário do arquivo. O numero siginifica o mesmo do anterior
+
+No terceiro dígito **0** define as permissões para outros usuários, nesse caso, esses usuários não tem permissão de leitura, gravação ou execução.
 
 ![Captura de tela de 2023-04-02 23-34-38](https://user-images.githubusercontent.com/70353348/229399010-78525847-3ef5-4731-9153-70344988837c.png)
 ![Captura de tela de 2023-04-02 23-37-35](https://user-images.githubusercontent.com/70353348/229399011-5910f8f4-24f2-40aa-808c-b6810e4733a3.png)
 
-Agora é só conectar
+> :warning: Salve, reinicie e verifique o status
 
+Agora é só conectar, no meu caso irei usar o gerenciador de arquivos do Linux que tem essa possibilidade de conectar FTP 
 
+Digitei essa url `ftp://ip_do_seu_servidor` na página outros dispositivos
 
 ![Captura de tela de 2023-04-02 23-42-41](https://user-images.githubusercontent.com/70353348/229400683-699702a8-fbe7-4a05-8585-1e9840174d28.png)
+
+Fiz o login com o usuário e a senha que criei
+
 ![Captura de tela de 2023-04-02 23-43-02](https://user-images.githubusercontent.com/70353348/229400686-d574ae0c-f972-4938-bdc7-870e25530f68.png)
+
+E aqui estamos acessando a pasta do servidor direto do meu computador
+
 ![image](https://user-images.githubusercontent.com/70353348/229400541-af490a7d-4f6c-4f7d-93e8-845b518a203a.png)
+
+Enviei uma imagem para essa pasta
+
 ![image](https://user-images.githubusercontent.com/70353348/229400800-c1c1ae3e-30a0-48b6-a3fa-3056d865f089.png)
+
+Aqui podemos ver a imagem pelo nosso servidor
+
 ![image](https://user-images.githubusercontent.com/70353348/229400888-b73fb892-3acd-4833-a3b9-2a90a2bdbb13.png)
 
+Aqui é um teste de download do arquivo do servidor, e como podemos ver está de fato limitado de 30Kb/s a 100Kb/s
+
+![image](https://user-images.githubusercontent.com/70353348/229629901-74051f14-ce28-44bb-b9d7-902a20a851c4.png)
+
+# Samba
 
