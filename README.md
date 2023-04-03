@@ -392,11 +392,23 @@ Pronto agora finalizamos nossa configuração do apache.
 
 # DNS 
 
-## sobre 
+## Sobre 
 
 DNS significa Domain Name System (Sistema de Nomes de Domínio, em português) e é um serviço essencial para a comunicação na internet ele é responsável por converter nomes de domínio em endereços IP, permitindo que os dispositivos se comuniquem uns com os outros.
 
-## arquivos 
+## Baixando e instalando
+
+Para baixar e instalar basta digitar esse código `apt install bind9 bind9-utils bind9-doc`
+
+Onde temos os pacotes:
+
+**bind9** que contém os arquivos necessários para instalar e executar o servidor DNS BIND9. Isso inclui os arquivos de configuração, bibliotecas e executáveis necessários para executar o servidor.
+
+**bind9-utils** que contém utilitários e ferramentas adicionais relacionados ao BIND9, como o utilitário "dig" para consultas DNS, o utilitário "nslookup" para resolução de nomes de domínio, entre outros.
+
+**bind9-doc** que contém documentação e manuais relacionados ao BIND9, incluindo o manual do usuário, manual do administrador e documentação técnica.
+
+## Arquivos 
 
 Os arquivos de configuração ficam na pasta **/etc/bind**
 
@@ -541,3 +553,63 @@ Podemos testar usando o `nslookup ip_ou_dominio` e abrindo pelo navegador.
 Como podemos ver, está tudo funcionando de acordo
 
 # FTP
+
+## Sobre
+
+O FTP (File Transfer Protocol) é um protocolo utilizado para transferir arquivos pela internet. Ele permite a transferência de arquivos de um computador para outro através da rede, seja ela local ou global.
+
+## Baixando e instalando
+
+Para baixar e instalar basta digitar esse código `apt install proftpd` que baixará o pacote proftpd
+
+## Configurando
+
+Para confirarmos vamos primeiro á esse arquivo `/etc/proftpd/proftpd.conf` vamos primeiro trocar o nome do servidor de **Debian** para **elvis**
+
+
+![Captura de tela de 2023-04-02 23-09-47](https://user-images.githubusercontent.com/70353348/229396057-930dac83-e253-4355-9bf9-6b9a0f5eb329.png)
+![Captura de tela de 2023-04-02 23-10-00](https://user-images.githubusercontent.com/70353348/229396065-6234024e-2072-452e-861f-c73a3cb18796.png)
+
+Em **ShowSymLinks** vamos deixar off
+
+![image](https://user-images.githubusercontent.com/70353348/229396228-d81eb931-ddd9-404c-b29f-0f305073c05a.png)
+
+Vamos descomentar as configurações **DefaultRoot ~** e **RequireValidShell off**
+
+![Captura de tela de 2023-04-02 23-15-03](https://user-images.githubusercontent.com/70353348/229396472-fc333883-28d6-4707-96ad-335e2ba078ec.png)
+![Captura de tela de 2023-04-02 23-15-24](https://user-images.githubusercontent.com/70353348/229396476-71330164-3359-44ba-afe0-0e773ce5130a.png)
+
+E no final do arquivo as configurações **TransferRate RETR 30:100** e **RootLogin Off**
+
+![Captura de tela de 2023-04-02 23-19-58](https://user-images.githubusercontent.com/70353348/229397311-1a7ac3a8-95cb-458e-9bca-d03bf40db352.png)
+
+Vamos criar um usuário, para poder usar o ftp, com o comando `adduser usuarioftp1`
+
+![image](https://user-images.githubusercontent.com/70353348/229397732-c022c62f-29a5-45a8-8402-55ae8446d374.png)
+
+Agora vamos modificar o seguinte arquivo `/etc/passwd` modificando as pastas do usuário que acabamos de criar para ficar assim `/home/usuarioftp1/ftp` e `/usr/sbin/nologin`
+
+![Captura de tela de 2023-04-02 23-28-29](https://user-images.githubusercontent.com/70353348/229398041-c5d8de58-2732-496c-89b2-e34664b4a810.png)
+![Captura de tela de 2023-04-02 23-28-39](https://user-images.githubusercontent.com/70353348/229398049-43ce8e89-11e6-4872-bbc2-c74e9ebc0f98.png)
+
+Agora vamos criar a pasta ftp do usuario, vamos na pasta home e no usuarioftp1 e digitamos mkdir ftp para criar a pasta
+
+![Captura de tela de 2023-04-02 23-33-49](https://user-images.githubusercontent.com/70353348/229399004-a18c127c-dfed-46bd-a780-71bee6713a40.png)
+![Captura de tela de 2023-04-02 23-33-55](https://user-images.githubusercontent.com/70353348/229399009-0455b001-3e0c-4b40-8cec-55c35551c4bc.png)
+
+Agora vamos mudar as permissões da pasta com os comandos `chown usuarioftp1:usuarioftp1 ftp` e `chmod 770 ftp`
+
+![Captura de tela de 2023-04-02 23-34-38](https://user-images.githubusercontent.com/70353348/229399010-78525847-3ef5-4731-9153-70344988837c.png)
+![Captura de tela de 2023-04-02 23-37-35](https://user-images.githubusercontent.com/70353348/229399011-5910f8f4-24f2-40aa-808c-b6810e4733a3.png)
+
+Agora é só conectar
+
+
+
+![Captura de tela de 2023-04-02 23-42-41](https://user-images.githubusercontent.com/70353348/229400683-699702a8-fbe7-4a05-8585-1e9840174d28.png)
+![Captura de tela de 2023-04-02 23-43-02](https://user-images.githubusercontent.com/70353348/229400686-d574ae0c-f972-4938-bdc7-870e25530f68.png)
+![image](https://user-images.githubusercontent.com/70353348/229400541-af490a7d-4f6c-4f7d-93e8-845b518a203a.png)
+![image](https://user-images.githubusercontent.com/70353348/229400800-c1c1ae3e-30a0-48b6-a3fa-3056d865f089.png)
+![image](https://user-images.githubusercontent.com/70353348/229400888-b73fb892-3acd-4833-a3b9-2a90a2bdbb13.png)
+
+
