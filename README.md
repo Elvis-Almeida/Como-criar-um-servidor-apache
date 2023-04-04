@@ -676,8 +676,8 @@ Agora vamos adicionar as seguintes configurações
 
 ```
 [global]
-netbios name = ifma_seunome
-workgroup = ifma_seunome
+netbios name = ifma_elvis
+workgroup = ifma_elvis
 server string = Servidor dos Alunos
 security = user
 
@@ -727,14 +727,37 @@ Onde essas configurações significam:
 **[nome_qualquer]** – significa que as configurações e informações são personalizadas
 
 ---
+
 Configurações dentro das chaves:
 
-_1_ _**netbios name**_: *define* o nome do servidor.
+**_-_** **netbios name**: define o nome do servidor.
 
-**workgroup**: define o nome do grupo de trabalho/domínio.
+**_-_** **workgroup**: define o nome do grupo de trabalho/domínio.
 
-**server string**: define a string de descrição do servidor.
+**_-_** **server string**: define a string de descrição do servidor.
 
-**security**: define o modo de segurança do Samba.
+**_-_** **security**: define o modo de segurança que no nosso caso é de usuário.
+
+---
+
+**_-_** **path**: define o caminho para o diretório compartilhado.
+
+**_-_** **guest ok**: permite que usuários não-autenticados acessem o compartilhamento.
+
+**_-_** **browseable**: permite que o compartilhamento seja listado pelos clientes.
+
+**_-_** **writeable**: permite que os usuários possam escrever arquivos no compartilhamento.
+
+**_-_** **printable**: permite a impressão de arquivos do compartilhamento.
+
+**_-_** **create mask**: define as permissões dos arquivos criados pelos usuários no compartilhamento.
+
+> **-- O que cada numero significa, você pode fazer junção deles --** <br>**0000**: Nenhum acesso para o usuário proprietário, nenhum acesso para o grupo proprietário e nenhum acesso para outros usuários.<br>**0001**: Execução para outros usuários.<br>**0002**: Escrita para outros usuários.<br>**0003**: Escrita e execução para outros usuários.<br>**0004**: Leitura para outros usuários.<br>**0005**: Leitura e execução para outros usuários.<br>**0006**: Leitura e escrita para outros usuários.<br>**0007**: Leitura, escrita e execução para outros usuários.<br>**0010**: Execução para o grupo proprietário.<br>**0020**: Escrita para o grupo proprietário.<br>**0030**: Escrita e execução para o grupo proprietário.<br>**0040**: Leitura para o grupo proprietário.<br>**0050**: Leitura e execução para o grupo proprietário.<br>**0060**: Leitura e escrita para o grupo proprietário.<br>**0070**: Leitura, escrita e execução para o grupo proprietário.<br>**0100**: Execução para o proprietário do arquivo.<br>**0200**: Escrita para o proprietário do arquivo.<br>**0300**: Escrita e execução para o proprietário do arquivo.<br>**0400**: Leitura para o proprietário do arquivo.<br>**0500**: Leitura e execução para o proprietário do arquivo.<br>**0600**: Leitura e escrita para o proprietário do arquivo.<br>**0700**: Leitura, escrita e execução para o proprietário do arquivo.
+
+**_-_** **force create mode**: força as permissões dos arquivos criados pelos usuários no compartilhamento.
+
+
+
+
 
 Para reiniciar o serviço digite o comando `/etc/init.d/smbd restart` e para ver o status do serviço `/etc/init.d/smbd status`
