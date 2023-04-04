@@ -574,7 +574,7 @@ Em **ShowSymLinks** vamos deixar off, essa configuração determina se os links 
 
 ![image](https://user-images.githubusercontent.com/70353348/229396228-d81eb931-ddd9-404c-b29f-0f305073c05a.png)
 
-Vamos descomentar as configurações **DefaultRoot~** e **RequireValidShell off**, sendo que o **DefaultRoot** define o diretório inicial padrão para o usuário FTP após o login, no nosso caso o **~** representa o diretório home do usuário, onde após o login, o usuário será direcionado para o seu diretório home no servidor que no nosso caso será o **/home/usuarioftp1** já o **RequireValidShell off** define se o ProFTPD permiti que usuários com um shell inválido façam login no servidor FTP, como o valor que colocamos é off isso permite que qualquer usuário faça login, mesmo que o shell listado em /etc/passwd seja inválido.
+Vamos descomentar as configurações **DefaultRoot~** e **RequireValidShell off**, sendo que o **DefaultRoot** define o diretório inicial padrão para o usuário FTP após o login, no nosso caso o **~** representa o diretório home do usuário, onde após o login, o usuário será direcionado para o seu diretório home no servidor que no nosso caso será o **/home/usuarioftp1** já o **RequireValidShell off** define se permite que usuários com um shell inválido façam login no servidor FTP, como o valor que colocamos é off isso permite que qualquer usuário faça login, mesmo que o shell listado em /etc/passwd seja inválido.
 
 ![Captura de tela de 2023-04-02 23-15-03](https://user-images.githubusercontent.com/70353348/229396472-fc333883-28d6-4707-96ad-335e2ba078ec.png)
 ![Captura de tela de 2023-04-02 23-15-24](https://user-images.githubusercontent.com/70353348/229396476-71330164-3359-44ba-afe0-0e773ce5130a.png)
@@ -584,6 +584,8 @@ E no final do arquivo vamos adicionar as configurações **TransferRate RETR 30:
 ![Captura de tela de 2023-04-02 23-19-58](https://user-images.githubusercontent.com/70353348/229397311-1a7ac3a8-95cb-458e-9bca-d03bf40db352.png)
 
 > :warning: Salve, reinicie e verifique o status
+
+Use o comando `/etc/init.d/proftpd restart` para reiniciar o serviço e `/etc/init.d/proftpd status` para ver o status do serviço.
 
 ![image](https://user-images.githubusercontent.com/70353348/229621655-5650497a-4a17-435d-83d4-2beec2101ecd.png)
 
@@ -648,3 +650,91 @@ Aqui é um teste de download do arquivo do servidor, e como podemos ver está de
 
 # Samba
 
+## Sobre 
+
+O Samba é também uma solução de compartilhamento de arquivos e também de impressoras, ele amplamente utilizado em redes mistas com diferentes sistemas operacionais, oferecendo uma forma simples e segura de compartilhar recursos em uma rede local ou na internet.
+
+## Baixando e instalando 
+
+Para baixar e instalar o Samba basta digitar esse código `apt install samba samba-common` onde o pacote **samba** contém os arquivos binários e bibliotecas necessários para executar o serviço, já o pacote **samba-common** contém arquivos de configuração compartilhados entre os componentes do Samba, como os arquivos de configuração do daemon e os arquivos de configuração do cliente.
+
+## Configurando
+
+Antes de configurarmos vamos fazer o backup do arquivo de configuração **smb.conf** que está na pasta `/etc/samba`, com o comando `cp` 
+
+![image](https://user-images.githubusercontent.com/70353348/229634138-0075af68-c8b4-4bb8-a61c-9469e53576b6.png)
+
+Após isso vamos abrir o arquivo **smb.conf** para configura-lo. vamos selecionar e apagar toda essa configuração que veio nele.
+
+Para selecionar você segura o `Shift + seta para baixo` e para apagar precione `ctrl + k`
+
+![image](https://user-images.githubusercontent.com/70353348/229635359-2453f854-3a53-4b42-b04c-5c6a15f511fd.png)
+
+![image](https://user-images.githubusercontent.com/70353348/229636218-9846ed44-42d3-498b-8231-48d32bdc1c82.png)
+
+Agora vamos adicionar as seguintes configurações
+
+```
+[global]
+netbios name = ifma_seunome
+workgroup = ifma_seunome
+server string = Servidor dos Alunos
+security = user
+
+[public]
+path = /home/samba
+guest ok = yes
+browseable = yes
+writeable = yes
+printable = no
+create mask = 0777
+force create mode = 0777
+
+[homes]
+Comment = Diretórios dos usuários registrados.
+path = /samba/home/%U
+valid users = %U
+hosts allow = 168.0.192.x, 168.0.192.y, 168.0.192.z
+read only = Yes
+create mask = 0700
+directory mask = 0700
+browseable = No
+
+[printers]
+comment = Compartilhando as Impressoras
+print ok = yes
+guest ok = yes
+path = /var/spool/samba
+
+[alunosifma]
+Comment = Diretórios dos alunos
+path = /etc/samba/alunosifma
+valid users = usuario1, usuario2
+create mask = 0777
+force create mode = 0777
+force security mode = 0777
+guest ok = yes
+```
+
+Onde essas configurações significam:
+
+**[global]** - significa que as configurações dentro dela afetam todo o servidor Samba
+
+**[homes]** - significa que as configurações dentro dela afetam a pasta home para cada usuário
+
+**[printers]** - significa que as configurações dentro dela controlam as impressoras na rede
+
+**[nome_qualquer]** – significa que as configurações e informações são personalizadas
+
+---
+Configurações dentro das chaves:
+
+_1_ _**netbios name**_: *define* o nome do servidor.
+
+**workgroup**: define o nome do grupo de trabalho/domínio.
+
+**server string**: define a string de descrição do servidor.
+
+**security**: define o modo de segurança do Samba.
+
+Para reiniciar o serviço digite o comando `/etc/init.d/smbd restart` e para ver o status do serviço `/etc/init.d/smbd status`
