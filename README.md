@@ -23,7 +23,7 @@ Sistema operacioal: Linux Pop!_OS 22.04 LTS<br>
 Disco: SSD NVMe m.2 512GB<br>
 Placa de rede: Gigabit<br>
 
-# Instalando servidor :rocket:
+# Instalando servidor
 
 ## Baixando `.iso` do ubunto server
 
@@ -694,7 +694,7 @@ force create mode = 0777
 Comment = Diretórios dos usuários registrados.
 path = /samba/home/%U
 valid users = %U
-hosts allow = 168.0.192.x, 168.0.192.y, 168.0.192.z
+hosts allow = 192.168.43.0/24
 read only = Yes
 create mask = 0700
 directory mask = 0700
@@ -709,7 +709,7 @@ path = /var/spool/samba
 [alunosifma]
 Comment = Diretórios dos alunos
 path = /etc/samba/alunosifma
-valid users = usuario1, usuario2
+valid users = usuarioftp1
 create mask = 0777
 force create mode = 0777
 force security mode = 0777
@@ -738,8 +738,6 @@ Configurações dentro das chaves:
 
 **_-_** **security**: define o modo de segurança que no nosso caso é de usuário.
 
----
-
 **_-_** **path**: define o caminho para o diretório compartilhado.
 
 **_-_** **guest ok**: permite que usuários não-autenticados acessem o compartilhamento.
@@ -756,8 +754,27 @@ Configurações dentro das chaves:
 
 **_-_** **force create mode**: força as permissões dos arquivos criados pelos usuários no compartilhamento.
 
+**_-_** **Comment**: define o comentário sobre o compartilhamento.
 
+**_-_** **valid users**: lista de usuários autorizados a acessar o compartilhamento, %U para todos os usuários.
 
+**_-_** **hosts allow**: define uma lista de hosts ou sub-redes que podem acessar o compartilhamento.
 
+**_-_** **read only**: define se o compartilhamento é somente leitura.
+
+**_-_** **directory mask**: define as permissões dos diretórios criados pelos usuários no compartilhamento.
+
+**_-_** **print ok**: permite que as impressoras sejam compartilhadas.
+
+**_-_** **force security mode**: força as permissões de segurança dos arquivos criados pelos usuários no compartilhamento.
+
+> Cada configuração dessa pode ser colcada em qualquer chave, há muitas possibilidades de configurações aqui, mas a que irei utilizar será essa.
+
+![image](https://user-images.githubusercontent.com/70353348/229670525-f716bc80-cc5c-40d0-97aa-de7d8898706a.png)
+
+> :warning: Salve, reinicie e verifique o status
 
 Para reiniciar o serviço digite o comando `/etc/init.d/smbd restart` e para ver o status do serviço `/etc/init.d/smbd status`
+
+![image](https://user-images.githubusercontent.com/70353348/229672654-873bad8b-154b-4f06-8a32-460d12d528f1.png)
+
