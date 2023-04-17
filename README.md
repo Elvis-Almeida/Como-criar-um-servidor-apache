@@ -672,7 +672,7 @@ Para selecionar você segura o `Shift + seta para baixo` e para apagar precione 
 
 ![image](https://user-images.githubusercontent.com/70353348/229636218-9846ed44-42d3-498b-8231-48d32bdc1c82.png)
 
-Agora vamos adicionar as seguintes configurações
+Agora vamos adicionar um exemplo de configuração (*existem várias formas de configurar essa é apenas uma delas*)
 
 ```
 [global]
@@ -836,7 +836,7 @@ agora já podemos enviar arquivos para nosso servidor, basta colocar logim e sen
 
 # Serviço DHCP
 
-## sobre
+## Sobre
 
 O DHCP (Dynamic Host Configuration Protocol) é um protocolo de rede que permite a atribuição dinâmica de endereços IP (Internet Protocol) a dispositivos em uma rede. 
 
