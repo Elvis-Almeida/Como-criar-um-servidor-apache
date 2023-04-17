@@ -2,7 +2,7 @@
 
 # Introdução
 
-Essa wiki documenta todas as etapas de implementação de um servidor apache proposto pelo professor [Paulo Henrique Sousa Barbosa](https://github.com/agenteph) na disciplina de Redes II do curso de Ciência da Computação do Instituto Federal de Educação, Ciência e Tecnologia do Maranhão - Campus Imperatriz (IFMA). Projeto implementado por [Elvis Rodrigues Almeida](https://github.com/Elvis-Almeida)
+Essa wiki documenta todas as etapas de implementação de um servidor apache proposto pelo professor [Paulo Henrique Sousa Barbosa](https://github.com/agenteph) na disciplina de Redes de Computadores II do curso de Ciência da Computação do Instituto Federal de Educação, Ciência e Tecnologia do Maranhão - Campus Imperatriz (IFMA). Projeto implementado por [Elvis Rodrigues Almeida](https://github.com/Elvis-Almeida)
 
 Em toda nossa jornada iremos utilizar uma máquina virtual, mas após a criação da máquina virtual e execução do `.iso` todo o resto será igual a um computador real após a execução do pen-drive bootável. Irei considerar que você saiba criar e executar um pen-drive bootável *(caso queira instalar em seu computador físico)* e também instalar o [VitualBox](https://www.virtualbox.org/) em seu PC, mas se você não tem esse conhecimento de como fazer, aqui estão alguns links que te ajudaram nisso:
 
@@ -14,7 +14,7 @@ Em toda nossa jornada iremos utilizar uma máquina virtual, mas após a criaçã
 
 ---
 
-## Especificação do computador utilizado
+## Especificação do computador
 
 Processador: Intel® Core™ i5-9300H CPU @ 2.40GHz × 8<br>
 Memória ram: 8GB<br>
@@ -25,7 +25,7 @@ Placa de rede: Gigabit<br>
 
 # Instalando servidor
 
-## Baixando `.iso` do ubunto server
+## Baixando `.iso`
 
 Para baixar o `.iso` é muito simples, basta acessar o site oficial de download https://ubuntu.com/download/server e clicar em "Download Ubuntu Server". A versão que irei utilizar é a *Ubuntu Server 22.04.2 LTS*
 
@@ -71,7 +71,7 @@ Para isso vamos em **Configurações**.
 
 ![Captura de tela de 2023-03-21 22-27-36](https://user-images.githubusercontent.com/70353348/226778223-c8cae63f-ea78-4bcf-9bee-0013e31c2b6b.png)
 
-Depois selecione **Rede**, na janela de rede em **Conectado a**, selecione a opção **Placa em modo bridge** (*isso fará o computador virtual pegar o ip da sua rede real, dessa forma tornando possivel conectarmos ao servidor mais tarde*) e na opção avançado desmarque a caixinha de **Cabo conectado**. 
+Depois selecione **Rede**, na janela de rede em **Conectado a**, selecione a opção **Placa em modo bridge** (*isso fará o computador virtual pegar o ip da sua rede real, dessa forma tornando possivel conectarmos ao servidor mais tarde*) e na opção avançado desmarque a caixinha de **Cabo conectado** (*isso fará nossa instalação ser mais rápida, pois não irá baixar pacotes durante a instalação o que pode causar demora*). 
 
 ![Captura de tela de 2023-03-21 21-55-47](https://user-images.githubusercontent.com/70353348/226780008-fd604953-2cc2-45fa-b1c3-73e1ba0fdd1c.png)
 
@@ -145,7 +145,7 @@ Se tudo estiver Ok você estará logado em seu servidor.
 
 # Utilitários e configurações 
 
-## Atualizando bibliotecas
+## Atualizando pacotes
 
 Agora podemos voltar na configuração de rede da maquina vitual e selecionar a caixa *Cabo conectado* para podermos usar internet no computador virtual.
 
@@ -157,7 +157,7 @@ Para entrar nesse modo basta digitar o comando `sudo su` e depois digitar a senh
 
 ![Captura de tela de 2023-03-21 22-32-31](https://user-images.githubusercontent.com/70353348/226785746-ad0f279b-c072-4cdf-a693-0a2e24d41efd.png)
 
-Para atualizarmos as bibliotecas é só digitar o comando `apt update && apt upgrade` para baixar e atualizar.
+Para atualizarmos as pacotes é só digitar o comando `apt update && apt upgrade` para baixar e atualizar.
 
 ![Captura de tela de 2023-03-21 22-34-51](https://user-images.githubusercontent.com/70353348/226785751-9128581c-1c1b-4c64-b6cf-75dc98750a24.png)
 
@@ -169,7 +169,7 @@ Ele irá perguntar se deseja continuar, é só digitar **y** e apetar **Enter**.
 
 Nessa parte vamos instalar algums utilitários que usaremos durante a instalação do apache, para isso utilizaremos o código `apt install nano inetutils-ping net-tools ip-tables iptraf-ng man-db openssh-server zip` que intalará todo o que precisamos por enguanto.
 
-nesse comando instalaremos as seguites bibliotecas:
+nesse comando instalaremos as seguites pacotes:
 
 **Nano**: é um editor de texto simples e fácil de usar, com recursos básicos como edição, busca e substituição de texto.
 
@@ -189,7 +189,7 @@ nesse comando instalaremos as seguites bibliotecas:
 
 ![Captura de tela de 2023-03-22 16-35-47](https://user-images.githubusercontent.com/70353348/228021137-698c62b3-6d4a-4763-9b43-52bd0c1228de.png)
 
-## Configurando SSH
+# Serviço SSH
 
 > :warning: Todas as configurações no linux são arquivos 
 
@@ -217,7 +217,7 @@ Para sabermos se tudo está correndo de forma certa após reiniciarmos vamos dig
 
 Vemos que está funcionando corretamente 
 
-## Acessando servidor via SSH
+## Acessando SSH
 
 Para conectar precisamos saber o IP do servidor, para isso vamos digitar o comando `ifconfig`
 
@@ -241,7 +241,7 @@ Agora vocẽ está conectado via SSH ao terminal do seu servidor
 
 ![Captura de tela de 2023-03-23 15-09-04](https://user-images.githubusercontent.com/70353348/228031335-5fc47ff5-bd6c-44be-a2e9-701c5bd2e8b1.png)
 
-# Apache 
+# Servidor Web (Apache) 
 
 ## Sobre o apache
 
@@ -352,7 +352,7 @@ Após essas modificações iremos reiniciar e testar se está tudo Ok.
 
 ![Captura de tela de 2023-03-23 15-34-02](https://user-images.githubusercontent.com/70353348/229377922-61bb9f34-ded9-443a-b7df-85b6f1d61c05.png)
 
-### Baixando e instalando site
+### Adicionando site
 
 Agora vamos trocar o site padrão que veio no apache para poder deixar nosso ambiente mais bonito, para isso vamos acessar o site https://html5up.net/ onde temos varios sites html para baixar.
 
@@ -390,7 +390,7 @@ Caso queira modificar o site, é só mexer nos arquivos que baixou, eu fiz umas 
 
 Pronto agora finalizamos nossa configuração do apache.
 
-# DNS 
+# Serviço DNS 
 
 ## Sobre 
 
@@ -402,7 +402,7 @@ Para baixar e instalar basta digitar esse código `apt install bind9 bind9-utils
 
 Onde temos os pacotes:
 
-**bind9** que contém os arquivos necessários para instalar e executar o servidor DNS BIND9. Isso inclui os arquivos de configuração, bibliotecas e executáveis necessários para executar o servidor.
+**bind9** que contém os arquivos necessários para instalar e executar o servidor DNS BIND9. Isso inclui os arquivos de configuração, pacotes e executáveis necessários para executar o servidor.
 
 **bind9-utils** que contém utilitários e ferramentas adicionais relacionados ao BIND9, como o utilitário "dig" para consultas DNS, o utilitário "nslookup" para resolução de nomes de domínio, entre outros.
 
@@ -437,7 +437,7 @@ E o arquivo de log pode ser acessado por esse comando `journalctl -u named.servi
 
 ![image](https://user-images.githubusercontent.com/70353348/229381043-ec5644e2-27e6-436c-a3e3-8d7ed224954d.png)
 
-## configurando 
+## Configurando 
 
 Vamos começar copiando o arquivo **db.local** com o nome de **db.elvis.com** com o comando `cp nome_do_arquivo nome_do_novo_arquivo`
 
@@ -552,7 +552,7 @@ Podemos testar usando o `nslookup ip_ou_dominio` e abrindo pelo navegador.
 
 Como podemos ver, está tudo funcionando de acordo
 
-# FTP
+# Serviço FTP
 
 ## Sobre
 
@@ -648,7 +648,7 @@ Aqui é um teste de download do arquivo do servidor, e como podemos ver está de
 
 ![image](https://user-images.githubusercontent.com/70353348/229629901-74051f14-ce28-44bb-b9d7-902a20a851c4.png)
 
-# Samba
+# Serviço Samba
 
 ## Sobre 
 
@@ -656,7 +656,7 @@ O Samba é também uma solução de compartilhamento de arquivos e também de im
 
 ## Baixando e instalando 
 
-Para baixar e instalar o Samba basta digitar esse código `apt install samba samba-common` onde o pacote **samba** contém os arquivos binários e bibliotecas necessários para executar o serviço, já o pacote **samba-common** contém arquivos de configuração compartilhados entre os componentes do Samba, como os arquivos de configuração do daemon e os arquivos de configuração do cliente.
+Para baixar e instalar o Samba basta digitar esse código `apt install samba samba-common` onde o pacote **samba** contém os arquivos binários e pacotes necessários para executar o serviço, já o pacote **samba-common** contém arquivos de configuração compartilhados entre os componentes do Samba, como os arquivos de configuração do daemon e os arquivos de configuração do cliente.
 
 ## Configurando
 
@@ -676,8 +676,8 @@ Agora vamos adicionar as seguintes configurações
 
 ```
 [global]
-netbios name = ifma_elvis
-workgroup = ifma_elvis
+netbios name = usuarioftp1
+workgroup = usuarioftp1
 server string = Servidor dos Alunos
 security = user
 
@@ -690,30 +690,18 @@ printable = no
 create mask = 0777
 force create mode = 0777
 
-[homes]
-Comment = Diretórios dos usuários registrados.
-path = /samba/home/%U
-valid users = %U
-hosts allow = 192.168.43.0/24
-read only = Yes
-create mask = 0700
-directory mask = 0700
-browseable = No
-
 [printers]
 comment = Compartilhando as Impressoras
 print ok = yes
 guest ok = yes
 path = /var/spool/samba
 
-[alunosifma]
+[elvis]
 Comment = Diretórios dos alunos
-path = /etc/samba/alunosifma
+path = /etc/samba/elvis
 valid users = usuarioftp1
 create mask = 0777
 force create mode = 0777
-force security mode = 0777
-guest ok = yes
 ```
 
 Onde essas configurações significam:
@@ -750,7 +738,51 @@ Configurações dentro das chaves:
 
 **_-_** **create mask**: define as permissões dos arquivos criados pelos usuários no compartilhamento.
 
-> **-- O que cada numero significa, você pode fazer junção deles --** <br>**0000**: Nenhum acesso para o usuário proprietário, nenhum acesso para o grupo proprietário e nenhum acesso para outros usuários.<br>**0001**: Execução para outros usuários.<br>**0002**: Escrita para outros usuários.<br>**0003**: Escrita e execução para outros usuários.<br>**0004**: Leitura para outros usuários.<br>**0005**: Leitura e execução para outros usuários.<br>**0006**: Leitura e escrita para outros usuários.<br>**0007**: Leitura, escrita e execução para outros usuários.<br>**0010**: Execução para o grupo proprietário.<br>**0020**: Escrita para o grupo proprietário.<br>**0030**: Escrita e execução para o grupo proprietário.<br>**0040**: Leitura para o grupo proprietário.<br>**0050**: Leitura e execução para o grupo proprietário.<br>**0060**: Leitura e escrita para o grupo proprietário.<br>**0070**: Leitura, escrita e execução para o grupo proprietário.<br>**0100**: Execução para o proprietário do arquivo.<br>**0200**: Escrita para o proprietário do arquivo.<br>**0300**: Escrita e execução para o proprietário do arquivo.<br>**0400**: Leitura para o proprietário do arquivo.<br>**0500**: Leitura e execução para o proprietário do arquivo.<br>**0600**: Leitura e escrita para o proprietário do arquivo.<br>**0700**: Leitura, escrita e execução para o proprietário do arquivo.
+**-- O que cada numero significa, você pode fazer junção deles --** 
+
+>**0000**: Nenhum acesso para o usuário proprietário, nenhum acesso para o grupo proprietário e nenhum acesso para outros usuários.
+
+>**0001**: Execução para outros usuários.
+
+>**0002**: Escrita para outros usuários.
+
+>**0003**: Escrita e execução para outros usuários.
+
+>**0004**: Leitura para outros usuários.
+
+>**0005**: Leitura e execução para outros usuários.
+
+>**0006**: Leitura e escrita para outros usuários.
+
+>**0007**: Leitura, escrita e execução para outros usuários.
+
+>**0010**: Execução para o grupo proprietário.
+
+>**0020**: Escrita para o grupo proprietário.
+
+>**0030**: Escrita e execução para o grupo proprietário.
+
+>**0040**: Leitura para o grupo proprietário.
+
+>**0050**: Leitura e execução para o grupo proprietário.
+
+>**0060**: Leitura e escrita para o grupo proprietário.
+
+>**0070**: Leitura, escrita e execução para o grupo proprietário.
+
+>**0100**: Execução para o proprietário do arquivo.
+
+>**0200**: Escrita para o proprietário do arquivo.
+
+>**0300**: Escrita e execução para o proprietário do arquivo.
+
+>**0400**: Leitura para o proprietário do arquivo.
+
+>**0500**: Leitura e execução para o proprietário do arquivo.
+
+>**0600**: Leitura e escrita para o proprietário do arquivo.
+
+>**0700**: Leitura, escrita e execução para o proprietário do arquivo.
 
 **_-_** **force create mode**: força as permissões dos arquivos criados pelos usuários no compartilhamento.
 
@@ -766,15 +798,46 @@ Configurações dentro das chaves:
 
 **_-_** **print ok**: permite que as impressoras sejam compartilhadas.
 
-**_-_** **force security mode**: força as permissões de segurança dos arquivos criados pelos usuários no compartilhamento.
-
 > Cada configuração dessa pode ser colcada em qualquer chave, há muitas possibilidades de configurações aqui, mas a que irei utilizar será essa.
 
-![image](https://user-images.githubusercontent.com/70353348/229670525-f716bc80-cc5c-40d0-97aa-de7d8898706a.png)
+![image](https://user-images.githubusercontent.com/70353348/232339052-608c7429-01c3-45c2-8131-829ce274e879.png)
 
 > :warning: Salve, reinicie e verifique o status
 
 Para reiniciar o serviço digite o comando `/etc/init.d/smbd restart` e para ver o status do serviço `/etc/init.d/smbd status`
 
 ![image](https://user-images.githubusercontent.com/70353348/229672654-873bad8b-154b-4f06-8a32-460d12d528f1.png)
+
+Agora vamos criar as pastas que listamos nas configurações e das as permissões para que ela possa ser acessada.
+
+nesse primeira parte criei a pasta **elvis** usando o comando `mkdir nome_da_pasta`, listei as permissões da pasta com `ls -l` alterei o usuario da pasta para o usuarioftp1 com o omando `chown usuário:grupo_do_usuário pasta` e depois alterei as permissões com o comando `chmod 777 pasta` permitindo que a pasta seja totalmente aberta, cuidado ao fazer isso, pois pode deixar falhas de segurança. 
+
+![image](https://user-images.githubusercontent.com/70353348/232339331-286636b6-150a-450f-b116-85e0fa53b05d.png)
+
+fiz o mesmo processo para a pasta publica. 
+
+agora para finalizar a configuração vamos adicionar o usuarioftp aos usuarios samba com o comando `smbpasswd -a usuário`.
+
+![image](https://user-images.githubusercontent.com/70353348/232340591-b34116c6-e3cd-43bc-a731-b9ee6e70b7a8.png)
+
+agora já podemos enviar arquivos para nosso servidor, basta colocar logim e senha na pasta de usuario ou entrar como anônimo na pasta publica.
+
+![image](https://user-images.githubusercontent.com/70353348/232341386-37b2a33f-f434-4035-9102-441a1d35ca2b.png)
+
+![image](https://user-images.githubusercontent.com/70353348/232341520-5f7b24a3-37ac-4895-b3df-52e9488cdfa6.png)
+
+![image](https://user-images.githubusercontent.com/70353348/232341555-8e6dfac1-f566-43cc-8fd1-4fff66c6c6a5.png)
+
+![image](https://user-images.githubusercontent.com/70353348/232341633-d0d2ce7f-648b-4af4-a277-3d150bca6e24.png)
+
+![image](https://user-images.githubusercontent.com/70353348/232341674-8f29e741-4e46-48a5-bcaa-c70f12db0a2d.png)
+
+![image](https://user-images.githubusercontent.com/70353348/232341690-c63a5f84-ba4f-47fa-8ad7-15899fd720cb.png)
+
+# Serviço DHCP
+
+## sobre
+
+O DHCP (Dynamic Host Configuration Protocol) é um protocolo de rede que permite a atribuição dinâmica de endereços IP (Internet Protocol) a dispositivos em uma rede. 
+
 
