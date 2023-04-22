@@ -396,7 +396,7 @@ Pronto agora finalizamos nossa configuração do apache.
 
 DNS significa Domain Name System (Sistema de Nomes de Domínio, em português) e é um serviço essencial para a comunicação na internet ele é responsável por converter nomes de domínio em endereços IP, permitindo que os dispositivos se comuniquem uns com os outros.
 
-## Baixando e instalando
+## Instalando
 
 Para baixar e instalar basta digitar esse código `apt install bind9 bind9-utils bind9-doc`
 
@@ -558,7 +558,7 @@ Como podemos ver, está tudo funcionando de acordo
 
 O FTP (File Transfer Protocol) é um protocolo utilizado para transferir arquivos pela internet. Ele permite a transferência de arquivos de um computador para outro através da rede, seja ela local ou global.
 
-## Baixando e instalando
+## Instalando
 
 Para baixar e instalar basta digitar esse código `apt install proftpd` que baixará o pacote proftpd
 
@@ -654,7 +654,7 @@ Aqui é um teste de download do arquivo do servidor, e como podemos ver está de
 
 O Samba é também uma solução de compartilhamento de arquivos e também de impressoras, ele amplamente utilizado em redes mistas com diferentes sistemas operacionais, oferecendo uma forma simples e segura de compartilhar recursos em uma rede local ou na internet.
 
-## Baixando e instalando 
+## Instalando 
 
 Para baixar e instalar o Samba basta digitar esse código `apt install samba samba-common` onde o pacote **samba** contém os arquivos binários e pacotes necessários para executar o serviço, já o pacote **samba-common** contém arquivos de configuração compartilhados entre os componentes do Samba, como os arquivos de configuração do daemon e os arquivos de configuração do cliente.
 
@@ -702,6 +702,7 @@ path = /etc/samba/elvis
 valid users = usuarioftp1
 create mask = 0777
 force create mode = 0777
+read only = no
 ```
 
 Onde essas configurações significam:
@@ -800,7 +801,7 @@ Configurações dentro das chaves:
 
 > Cada configuração dessa pode ser colcada em qualquer chave, há muitas possibilidades de configurações aqui, mas a que irei utilizar será essa.
 
-![image](https://user-images.githubusercontent.com/70353348/232339052-608c7429-01c3-45c2-8131-829ce274e879.png)
+![image](https://user-images.githubusercontent.com/70353348/233784814-d2d81a75-f203-4874-8e88-07d6b5a11039.png)
 
 > :warning: Salve, reinicie e verifique o status
 
@@ -810,17 +811,17 @@ Para reiniciar o serviço digite o comando `/etc/init.d/smbd restart` e para ver
 
 Agora vamos criar as pastas que listamos nas configurações e das as permissões para que ela possa ser acessada.
 
-nesse primeira parte criei a pasta **elvis** usando o comando `mkdir nome_da_pasta`, listei as permissões da pasta com `ls -l` alterei o usuario da pasta para o usuarioftp1 com o omando `chown usuário:grupo_do_usuário pasta` e depois alterei as permissões com o comando `chmod 777 pasta` permitindo que a pasta seja totalmente aberta, cuidado ao fazer isso, pois pode deixar falhas de segurança. 
+Nesse primeira parte criei a pasta **elvis** usando o comando `mkdir nome_da_pasta`, listei as permissões da pasta com `ls -l` alterei o usuario da pasta para o usuarioftp1 com o omando `chown usuário:grupo_do_usuário pasta` e depois alterei as permissões com o comando `chmod 777 pasta` permitindo que a pasta seja totalmente aberta, cuidado ao fazer isso, pois pode deixar falhas de segurança. 
 
 ![image](https://user-images.githubusercontent.com/70353348/232339331-286636b6-150a-450f-b116-85e0fa53b05d.png)
 
-fiz o mesmo processo para a pasta publica. 
+Fiz o mesmo processo para a pasta publica. 
 
-agora para finalizar a configuração vamos adicionar o usuarioftp aos usuarios samba com o comando `smbpasswd -a usuário`.
+Agora para finalizar a configuração vamos adicionar o usuarioftp aos usuarios samba com o comando `smbpasswd -a usuário`.
 
 ![image](https://user-images.githubusercontent.com/70353348/232340591-b34116c6-e3cd-43bc-a731-b9ee6e70b7a8.png)
 
-agora já podemos enviar arquivos para nosso servidor, basta colocar logim e senha na pasta de usuario ou entrar como anônimo na pasta publica.
+Agora já podemos enviar arquivos para nosso servidor, basta colocar logim e senha na pasta de usuario ou entrar como anônimo na pasta publica.
 
 ![image](https://user-images.githubusercontent.com/70353348/232341386-37b2a33f-f434-4035-9102-441a1d35ca2b.png)
 
@@ -838,6 +839,28 @@ agora já podemos enviar arquivos para nosso servidor, basta colocar logim e sen
 
 ## Sobre
 
-O DHCP (Dynamic Host Configuration Protocol) é um protocolo de rede que permite a atribuição dinâmica de endereços IP (Internet Protocol) a dispositivos em uma rede. 
+O DHCP (Dynamic Host Configuration Protocol) é um protocolo de rede que permite a atribuição dinâmica de endereços IP (Internet Protocol) a dispositivos em uma rede. É o serviço que configura os ips automaticamente nas máquinas conectadas.
 
+## Instalando
+
+Para baixar e instalar o serviço basta digitar esse código `apt install isc-dhcp-server` que baixará os pacotes
+
+## Configurando 
+
+Primeiramente vamos configurar o arquivo `nano /etc/default/isc-dhcp-server`, nesse arquivo é onde apontamos qual será o nosso arquivo de configuração e onde apontaremos também qual interface de rede nosso serviço atuará. Para fazermos isso vamos descomentar o `DHCPDv4_CONF=/etc/dhcp/dhcpd.conf` que é aonde nosso arquivo de configuração está, agora vamos definir nossa interface de rede a qual nosso serviço atuará, para saber qual interface de rede você vai usar é só usar o comando `ifconfig` e escolher a interface que está utilizando, para saber qual interface está utilizando basta ver qual delas tem o **IP** da rede em que você está conectado. no meu caso é a **enp0s3**
+
+![image](https://user-images.githubusercontent.com/70353348/233788063-abe746db-8983-4640-9845-20e70a7c3f6a.png)
+
+![image](https://user-images.githubusercontent.com/70353348/233787327-cf501de6-bd70-4a2e-b479-e9cfcc1171ba.png)
+
+> :warning: Não esqueça de salvar!
+
+![image](https://user-images.githubusercontent.com/70353348/233787927-8fe1d81a-4ef0-41e2-8ad1-78822b9b4cea.png)
+
+Agora vamos para a pasta do serviço `cd /etc/dhcp/` e abrir o arquivo **dhcpd.conf** que é o que faz a configuração do servidor DHCP e define as configurações de rede que o servidor DHCP deve oferecer aos clientes. Abrindo ele faremos as seguintes configurações, em **domain-name** irei colocar o meu **elvis.com** que foi criado anteriormente e em **domain-name-servers** colocarei o ip do meu servidor de DNS que é o **`192.168.43.227`** e mais outro sendo ele o servidor de DNS da CloundFLare **`1.1.1.1`**. O **default lease time** que é o tempo em que o cliente pode usar o endereço IP atribuído antes que ele precise renovar com o servidor DHCP vamos deixar em `86400` que é o tempo em segundos, já o 
+max lease time `172800`
+
+> :warning: Esse é apenas um exemplo de configuração, você pode alterar essas configurações conforme suas nessecidades.
+
+![image](https://user-images.githubusercontent.com/70353348/233789532-aae63e59-d7a2-4753-bb8c-bf7fc334969a.png)
 
