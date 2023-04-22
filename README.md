@@ -857,10 +857,98 @@ Primeiramente vamos configurar o arquivo `nano /etc/default/isc-dhcp-server`, ne
 
 ![image](https://user-images.githubusercontent.com/70353348/233787927-8fe1d81a-4ef0-41e2-8ad1-78822b9b4cea.png)
 
-Agora vamos para a pasta do serviço `cd /etc/dhcp/` e abrir o arquivo **dhcpd.conf** que é o que faz a configuração do servidor DHCP e define as configurações de rede que o servidor DHCP deve oferecer aos clientes. Abrindo ele faremos as seguintes configurações, em **domain-name** irei colocar o meu **elvis.com** que foi criado anteriormente e em **domain-name-servers** colocarei o ip do meu servidor de DNS que é o **`192.168.43.227`** e mais outro sendo ele o servidor de DNS da CloundFLare **`1.1.1.1`**. O **default lease time** que é o tempo em que o cliente pode usar o endereço IP atribuído antes que ele precise renovar com o servidor DHCP vamos deixar em `86400` que é o tempo em segundos, já o 
-max lease time `172800`
+Agora vamos para a pasta do serviço `cd /etc/dhcp/` e abrir o arquivo **dhcpd.conf** que é o que faz a configuração do servidor DHCP e define as configurações de rede que o servidor DHCP deve oferecer aos clientes. 
+
+Abrindo ele faremos as seguintes configurações, em **domain-name** irei colocar o meu **elvis.com** que foi criado anteriormente e em **domain-name-servers** colocarei o ip do meu servidor de DNS que é o `192.168.43.227` e mais outro sendo ele o servidor de DNS da CloundFLare `1.1.1.1`. O **default lease time** que é o tempo em que o cliente pode usar o endereço IP atribuído antes que ele precise renovar com o servidor DHCP vamos deixar em `86400` que é o tempo em segundos que em horas da 24, já o **max lease time** é o tempo máximo que o endereço IP pode ser mantido pelo cliente antes de precisar ser renovado vamos colocar em `172800` esse tempo também está em segundos que em horas dá 48. e vamos adicionar o **ignore client-updates** que faz que o servidor não atualize o DNS do cliente automáticamente quando ele solicita um novo ip.
 
 > :warning: Esse é apenas um exemplo de configuração, você pode alterar essas configurações conforme suas nessecidades.
 
 ![image](https://user-images.githubusercontent.com/70353348/233789532-aae63e59-d7a2-4753-bb8c-bf7fc334969a.png)
+
+![image](https://user-images.githubusercontent.com/70353348/233791044-a5125e6e-8da9-47c4-8e90-0200d4ca56ae.png)
+
+Você pode adicionar uma máquina para ter um ip fixo basta adicionar esse código no arquivo substituindo o mac do computador e colocar o ip que você quer que ele tenha.
+
+```
+host meupcfixo {
+  hardware ethernet 08:00:07:26:c0:a5;
+  fixed-address 192.168.0.12;
+}
+```
+
+Agora vamos adionar esse exemplo de configuração, no meu caso eu configurei dessa forma.
+
+```
+subnet 192.168.43.0 netmask 255.255.255.0 {
+  range 192.168.43.2 192.168.43.254;
+  option domain-name-servers 192.168.43.227;
+  option domain-name "elvis.com";
+  option routers 192.168.43.1;
+  option broadcast-address 192.168.43.255;
+  default-lease-time 600;
+  max-lease-time 7200;
+}
+```
+
+> :warning: é muito provavel que você terá que adaptar o código para sua rede.
+
+![image](https://user-images.githubusercontent.com/70353348/233796764-367fc6a1-99df-4aa3-ae72-605bac9edc88.png)
+
+Onde cada opção faz o seguinte:
+
+**Subnet 192.168.43.0 netmask 255.255.255.0** - Define o endereço IP e a máscara de sub-rede da rede. O endereço IP é 192.168.43.227 e a máscara de sub-rede é 255.255.255.0, o que significa que a rede pode ter até 256 hosts (*mas somente 253 endereços IP disponíveis para alocação devido ao endereço de rede e de broadcast*).
+
+**Range 192.168.43.2 192.168.43.254** - Define o intervalo de endereços IP que podem ser alocados aos clientes. No nosso caso, o intervalo é de **192.168.43.2 a 192.168.43.254**.
+
+**Option domain-name-servers 192.168.43.227** - Especifica o endereço do servidor DNS que será fornecido aos clientes.
+
+**Option domain-name "elvis.com"** - Define o nome de domínio que será fornecido aos clientes.
+
+**Option routers 192.168.43.1** - Especifica o endereço do roteador padrão para a rede. Neste caso, o roteador padrão é 192.168.43.1.
+
+**Option broadcast-address 192.168.43.255** - Define o endereço de broadcast da rede.
+
+**Default-lease-time 600** - Define o tempo de locação padrão para os endereços IP alocados aos clientes. Neste caso, o tempo de locação padrão é de 600 segundos (*10 minutos*).
+
+**Max-lease-time 7200** - Define o tempo máximo de locação para os endereços IP alocados aos clientes. Neste caso, o tempo máximo de locação é de 7200 segundos (*2 horas*), isso diz que após 2 horas, o cliente deverá renovar a locação do endereço IP.
+
+**ddns-update-style** - Especifica como os registros DNS dinâmicos são atualizados. Em **none** ele não atualiza registros DNS dinâmicos automaticamente.
+
+> :warning: após configurar salve, reinicie o serviço e verifique o status
+
+Agora vamos reiniciar e conferir o status com `/etc/init.d/isc-dhcp-server restart` e `/etc/init.d/isc-dhcp-server status`
+
+![image](https://user-images.githubusercontent.com/70353348/233796853-50549cb1-1180-4d09-b525-4f6ce70b71ba.png)
+
+Caso haja algum erro você pode verificar o log do serviço com esse comando `journalctl -u isc-dhcp-server`.
+
+Aqui vemos no mesmo log mensionado acima que um computador se conectou e recebeu ip de nosso servidor
+
+![image](https://user-images.githubusercontent.com/70353348/233797076-9bf3aecd-ccb7-4b66-8b2b-a2e41242b9ba.png)
+
+Aqui vemos o ip que foi fornecido
+
+![image](https://user-images.githubusercontent.com/70353348/233797145-72232fab-b5c1-4922-aa30-ad065c165835.png)
+
+Aqui vemos o DNS que foi fornecido
+
+![image](https://user-images.githubusercontent.com/70353348/233797181-c19e18eb-00f5-43a0-8795-16fbf6b98a33.png)
+
+# Serviço proxy (Squid)
+
+## Sobre
+
+## Instalando
+
+## configurando
+
+# Serviço IPSec
+
+## Sobre
+
+## Instalando
+
+## configurando
+
+# Mysql e PHP
 
