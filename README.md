@@ -938,9 +938,183 @@ Aqui vemos o DNS que foi fornecido
 
 ## Sobre
 
+O Squid é um servidor de proxy de cache web que é utilizado para melhorar a velocidade da internet armazenando em cache os arquivos e páginas da web frequentemente acessados, reduzindo assim o tráfego de internet e melhorando o desempenho geral da rede, além disso ele serve também como um bloqueador de conteúdo passando regras de bloqueio de acesso.
+
 ## Instalando
 
-## configurando
+Para instalar o serviço é só digitar esse comando `apt install squid` que será baixado e instalado em seu computador.
+
+## Configurando
+
+Para começarmos vamos entrar na pasta do serviço `cd /etc/squid` e abrir o arquivo `nano squid.conf` 
+
+> :warning: É fortemente recomendável você ler todo esse arquivo pois o squid apresenta uma grande variedade de configurações e eu vou apresentar apenas uma parte dela.
+
+![image](https://user-images.githubusercontent.com/70353348/233801279-8564b619-4d75-48a8-944c-96fe4b292166.png)
+
+Após isso vamos limpar todo o arquivo com esse comando `echo "0" > squid.conf` esse comando escreverá 0 substituindo todos os dados do arquivo, assim o arquivo terá apenas um 0 dentro dele.
+
+![image](https://user-images.githubusercontent.com/70353348/233805776-7610769a-1bc7-4dff-811b-c5e81ad24124.png)
+
+Para configurar o squid temos esse exemplo de configuração.
+
+```
+http_port 3128 
+error_directory /usr/share/squid/errors/Portuguese
+cache_mem 1024 MB
+cache_dir ufs /var/spool/squid 1000 16 256
+maximum_object_size_in_memory 64 KB
+maximum_object_size 50 MB
+cache_swap_low 70
+cache_swap_high 95
+
+access_log daemon:/var/log/squid/access.log squid
+cache_log /var/log/squid/cache.log
+
+acl localnet src 192.168.43.0/24
+acl Safe_ports port 80 # http
+acl Safe_ports port 21 # ftp
+acl Safe_ports port 443 # https
+http_access deny !Safe_ports
+
+acl sitesproibidos url_regex -i "/etc/squid/sitesproibidos"
+http_access deny localnet sitesproibidos
+http_access allow localnet
+http_access allow all
+```
+
+> :warning: A ordem das configurações **importam**, primeiro você coloca as configurações especificas depois você pode permitir ou negar tudo, caso você permita ou nege logo no inicio do arquivo todas as configurações especificas abaixo seram **ignoradas**.
+
+Onde essas configurações siginificam: 
+
+**http_port 3128** - Configura a porta em que o Squid irá escutar conexões HTTP que no nosso caso é a 3128.
+
+**error_directory /usr/share/squid/errors/Portuguese** - Define o diretório em que o Squid irá buscar as páginas de erro para apresentar aos usuários em caso de acesso negado ou outro erro, no nosso caso o diretório é definido como /usr/share/squid/errors/Portuguese, indicando que as mensagens serão exibidas em português.
+
+**cache_mem 1024 MB** - Define a quantidade de memória RAM que o Squid irá usar para armazenar em cache as requisições feitas pelos clientes.
+
+**cache_dir ufs /var/spool/squid 1000 16 256** - Configura o diretório onde o Squid irá armazenar as páginas em cache em disco, bem como algumas opções de tamanho do cache.
+
+> ufs: é o tipo de sistema de arquivos usado para armazenar o cache. "ufs" significa "Unix File System" (Sistema de Arquivos Unix).
+
+> /var/spool/squid: é o diretório onde o cache será armazenado. 
+
+> 1000: é o tamanho máximo do cache em megabytes, nesse caso, o tamanho máximo é de 1000 MB.
+
+> 16: é o número máximo de subdiretórios no diretório de cache. Essa opção ajuda a limitar o tamanho do diretório de cache e melhorar a velocidade de acesso aos arquivos de cache.
+
+> 256: é o número máximo de objetos de cache em cada subdiretório e tem a mesma finalidade da anterior
+
+Como as pastas iram ficar com essa configuração 
+
+![image](https://user-images.githubusercontent.com/70353348/233805677-b3552ca8-26d4-4124-9e48-370482b59521.png)
+
+**maximum_object_size_in_memory 64 KB** - Define o tamanho máximo de objetos que serão armazenados na memória RAM do servidor.
+
+**maximum_object_size 50 MB** - Define o tamanho máximo de objetos que serão armazenados em disco.
+
+**cache_swap_low 70** - Define a porcentagem de uso do disco em que o Squid começa a mover objetos menos utilizados para o disco.
+
+**cache_swap_high 95** - Define a porcentagem de uso do disco em que o Squid começa a remover objetos menos utilizados para liberar espaço em disco.
+
+**access_log daemon /var/log/squid/access.log squid** - Configura o arquivo de log do Squid.
+
+**cache_log /var/log/squid/cache.log** - Configura o arquivo de log do cache do Squid.
+
+**acl localnet src 192.168.43.0/24** - Define uma lista de acesso para a rede local, permitindo que somente clientes dessa rede possam acessar o Squid.
+
+**acl Safe_ports port 80** - Define uma ACL para as portas seguras que serão acessadas pelo Squid nesse caso permite o acesso à porta 80.
+
+**http_access deny !Safe_ports** Define uma regra para negar o acesso a todas as portas que não estão listadas na ACL Safe_ports.
+
+**acl sitesproibidos url_regex -i "/etc/squid/sitesproibidos"** - Define uma lista de acesso para os sites proibidos, baseada em uma expressão regular definida no arquivo /etc/squid/sitesproibidos.
+
+> acl sitesproibidos: Cria uma lista de controle de acesso chamada "sitesproibidos".
+
+> url_regex: Especifica que a ACL deve usar uma expressão regular para comparar as URLs.
+
+> -i: Indica que a comparação deve ser case-insensitive.
+
+> "/etc/squid/sitesproibidos": Especifica o caminho do arquivo contendo a lista de sites proibidos que será usado como base para comparação na ACL "sitesproibidos".
+
+**http_access deny localnet sitesproibidos** - Define uma regra para negar o acesso aos sites proibidos pela ACL sitesproibidos para clientes da rede local.
+
+**http_access allow localnet** - Define uma regra para permitir o acesso total à rede local.
+
+**http_access allow all** - Define uma regra para permitir o acesso a todos os clientes.
+
+> :warning: Salve o arquivo!!
+
+Agora vamos criar o arquivo **sitesproibidos** com o comando `touch nome_do_arquivo` e vamos adicionar nele os sites que queremos bloquear
+
+![image](https://user-images.githubusercontent.com/70353348/233802854-7101dea1-c8c3-463b-9e98-0879057d100e.png)
+
+Aqui podemos adicionar a lista de todos os sites que queremos bloquear
+
+![image](https://user-images.githubusercontent.com/70353348/233806793-9e8af3b0-21dc-4efb-9bf9-d33035a88032.png)
+
+Agora vamos consigurar o arquivo `/proc/sys/net/ipv4/ip_forward` que é usado para ativar ou desativar o encaminhamento de pacotes IP entre as interfaces de rede de um sistema Linux, fazemos isso apenas mudando seu valor de 0 para 1 com o comando `echo 1 > /proc/sys/net/ipv4/ip_forward`
+
+> :warning: Após configurado **reinicie** o servidor para a configuração ser efetivada
+
+![image](https://user-images.githubusercontent.com/70353348/233803126-1243dbd8-cad0-4bd6-8920-03cfc8cdf1b4.png)
+
+Agora vamos rodar esse comando `iptables -t nat -A POSTROUTING -o enp0s3 -s 192.168.43.0/24 -j MASQUERADE` esse comando adiciona uma regra à tabela **nat** do iptables que permite o mascaramento de endereços de rede. 
+
+> A opção **-t nat** indica que estamos trabalhando na tabela de tradução de endereços de rede.
+
+> A opção **-A POSTROUTING** indica que estamos adicionando uma nova regra de pós roteamento.
+
+> **-o** é a opção que indica a interface de saída, ou seja, a interface pela qual os pacotes serão encaminhados.
+
+> **-s** é a opção que define a origem dos pacotes que serão mascarados.
+
+> **-j MASQUERADE** é a opção que faz o mascaramento de endereço. Quando essa opção é usada, o endereço de origem do pacote é alterado para o endereço IP da interface de saída.
+
+![image](https://user-images.githubusercontent.com/70353348/233803454-671b8b74-29cf-48b7-a7e9-575dc3e5c6d8.png)
+
+Após essas configurações reinicie e verifique o status
+
+![image](https://user-images.githubusercontent.com/70353348/233803758-469e9f7b-66e8-41c5-b6d5-b35d3fbc3671.png)
+
+Agora é para está tudo funcionando.
+
+---
+
+Vamos configurar o nosso sistema operacional (*no meu caso o PopOS*, caso você queira testar no windowns veja esse link, [windows-10-como-configurar-um-proxy](https://canaltech.com.br/windows/windows-10-como-configurar-um-proxy/)) para adicionar nosso proxy. Para isso vamos nas configurações e depois em rede.
+
+![image](https://user-images.githubusercontent.com/70353348/233807972-5a14b82b-ba21-4f6d-b4e4-c692ced47426.png)
+
+Em proxy de rede vamos adicionar nosso proxy manualmente
+
+![image](https://user-images.githubusercontent.com/70353348/233807978-ac1d83a7-0a6d-40d5-87d0-2cadb8b11106.png)
+
+Aqui fiz o teste tentando acessar o site que marquei como proibido, podemos ver que o squid não permitiu, como esperado.
+
+![image](https://user-images.githubusercontent.com/70353348/233804103-b317b662-6888-4400-b67b-0dbe3bdf6d8c.png)
+
+Com esse comando podemos ver o log em tempo real do nosso servidor `tail -f /var/log/squid/access.log`, aqui podemos os acessos que estava fazendo e ele bloqueando os do **pao.com**
+
+![image](https://user-images.githubusercontent.com/70353348/233804181-bd1f961f-1f80-4cca-95ae-e9ec68435e11.png)
+
+Para você que chegou até aqui tem um bônus, vamos personalizar nossa página de acesso negado ou qual quer outra que desejar. Basta ir para essa pasta `cd /usr/share/squid/errors/Portuguese/` onde estão as páginas HTML que aparecem em caso de erro. 
+
+![image](https://user-images.githubusercontent.com/70353348/233804666-22709fc0-28c2-4319-bd1c-1c9ecf76af20.png)
+
+
+Faça um backup antes de modificar `cp ERR_ACCESS_DENIED ERR_ACCESS_DENIED.bkp`
+
+Após isso é só modificar conforme queira o arquivo com `nano ERR_ACCESS_DENIED`
+
+![image](https://user-images.githubusercontent.com/70353348/233804683-e2482478-45a3-4905-8084-96c18b7bff66.png)
+
+Adicionei meu código
+
+![image](https://user-images.githubusercontent.com/70353348/233805075-e78a7cfe-aefc-41a5-978e-c21424c0bc59.png)
+
+> :warning: Salve, reinicie o serviço e veja funcionando 
+
+![image](https://user-images.githubusercontent.com/70353348/233805374-9f172579-21be-44d9-bbff-50c664818f93.png)
 
 # Serviço IPSec
 
