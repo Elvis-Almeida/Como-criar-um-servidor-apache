@@ -437,7 +437,7 @@ Você pode também configurar o php no arquivo de configuração com o código `
 
 ![image](https://user-images.githubusercontent.com/70353348/233841940-d145bf69-97d7-4a1a-a107-de89047a2d92.png)
 
-Após instalar, use o comando `mysql_secure_installation` para fazer as configurações iniciais 
+Após instalar o MySQL, use o comando `mysql_secure_installation` para fazer as configurações iniciais 
 
 Para vermos o se o MySQL está funcionando vamos ver o status do serviço com `systemctl status mysql`
 
