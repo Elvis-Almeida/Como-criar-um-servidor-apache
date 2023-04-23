@@ -443,7 +443,7 @@ Para vermos o se o MySQL está funcionando vamos ver o status do serviço com `s
 
 ![image](https://user-images.githubusercontent.com/70353348/233845503-a3b8b58f-0527-4e28-b692-f19f736598c6.png)
 
-Vamos instalar também o PhpMyAdmin com o comando `apt install phpmyadmin` após você terminar a instalação basta acessar seu o menu de configuração que no meu caso é **192.168.43.227/phpmyadmin** 
+Vamos instalar também o PhpMyAdmin com o comando `apt install phpmyadmin` após você terminar a instalação basta acessar o menu de configuração que no meu caso é **192.168.43.227/phpmyadmin** 
 
 ![image](https://user-images.githubusercontent.com/70353348/233863232-35d78a2c-1ed3-4105-819b-4c7c547fd005.png)
 
