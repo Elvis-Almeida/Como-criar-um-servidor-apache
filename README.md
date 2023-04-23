@@ -390,6 +390,72 @@ Caso queira modificar o site, é só mexer nos arquivos que baixou, eu fiz umas 
 
 Pronto agora finalizamos nossa configuração do apache.
 
+# MySQL e PHP
+
+## Sobre
+
+MySQL é um sistema gerenciador de banco de dados relacional (RDBMS) de código aberto, ele é amplamente utilizado para armazenar e gerenciar grandes volumes de dados em sites e aplicativos web ele oferece uma variedade de recursos, incluindo suporte a múltiplos usuários, segurança, integridade de dados e alta disponibilidade.
+
+PHP é uma linguagem de programação de código aberto amplamente utilizada para desenvolvimento web ela é usada principalmente para a criação de aplicativos web dinâmicos que interagem com bancos de dados, como o MySQL. O PHP permite a criação de páginas dinâmicas e interativas, além de oferecer suporte a diversas bibliotecas e frameworks para desenvolvimento web.
+
+Juntos, o MySQL e o PHP formam uma combinação popular para desenvolvimento web, o PHP é capaz de se comunicar com bancos de dados MySQL e executar operações CRUD (criar, ler, atualizar, excluir) em registros de bancos de dados, permitindo que os desenvolvedores criem aplicativos web altamente dinâmicos e interativos.
+
+## Instalando
+
+Para instalar o php basta digitar esse comando `apt-get install php libapache2-mod-php` aonde `php` é o pacote de instalação da linguagem php já o pacote `libapache2-mod-php` é um módulo do Apache que permite ao servidor Apache interpretar e executar scripts PHP.
+
+Para instalar o MySQL basta digitar esse comando `apt install MySQL-server` que será baixado e instalado em seu servidor.
+
+## Configurando
+
+Após instalado o php vamos reiniciar os serviços do apache2
+`/etc/init.d/apache2 restart`
+
+![image](https://user-images.githubusercontent.com/70353348/233841343-86a48d92-b63a-4950-9f08-20402dcb173f.png)
+
+Agora vamos na pasta `/var/www/html` com o comando `cd /var/www/html` e vamos criar uma pasta php com o `mkdir php` vamos entrar nela com `cd` e criar o arquivo **index.php** com `touch index.php` e nesse arquivo vamos adicionar o sequinte código com o comando `nano index.php`:
+
+```
+<?php
+phpinfo();
+?>
+```
+
+![image](https://user-images.githubusercontent.com/70353348/233841472-ba744447-4dc8-4ac1-9abb-411162d27046.png)
+
+Salve com Ctrl + O e feche com Ctrl + X
+
+![image](https://user-images.githubusercontent.com/70353348/233841581-526e136d-9d02-46cc-933e-4b33fa7043ca.png)
+
+Agora podemos acessar nosso servidor no endereço 192.168.43.227/php e vemos que está tudo funcionando. 
+
+![image](https://user-images.githubusercontent.com/70353348/233841696-d8bbc5b3-b6f6-4f1e-9e04-a7a5dbb1bee3.png)
+
+Você pode também configurar o php no arquivo de configuração com o código `nano /etc/php/VERSÃO/apache2/php.ini`
+
+![image](https://user-images.githubusercontent.com/70353348/233841915-0713bbfb-6ec0-4990-b622-9e6b4a8e7fe5.png)
+
+![image](https://user-images.githubusercontent.com/70353348/233841940-d145bf69-97d7-4a1a-a107-de89047a2d92.png)
+
+Após instalar, use o comando `mysql_secure_installation` para fazer as configurações iniciais 
+
+Para vermos o se o MySQL está funcionando vamos ver o status do serviço com `systemctl status mysql`
+
+![image](https://user-images.githubusercontent.com/70353348/233845503-a3b8b58f-0527-4e28-b692-f19f736598c6.png)
+
+Vamos instalar também o PhpMyAdmin com o comando `apt install phpmyadmin` após você terminar a instalação basta acessar seu o menu de configuração que no meu caso é **192.168.43.227/phpmyadmin** 
+
+![image](https://user-images.githubusercontent.com/70353348/233863232-35d78a2c-1ed3-4105-819b-4c7c547fd005.png)
+
+![image](https://user-images.githubusercontent.com/70353348/233862994-cc977b1d-fdc0-4364-884f-305b3c369031.png)
+
+![image](https://user-images.githubusercontent.com/70353348/233863571-d5c43de8-7145-4eae-9964-53b1cf16c89e.png)
+
+![image](https://user-images.githubusercontent.com/70353348/233863591-2928d5c6-a409-44f8-b7fb-672a0f70bc26.png)
+
+
+
+
 # Serviço DNS 
 
 ## Sobre 
@@ -411,7 +477,6 @@ Onde temos os pacotes:
 ## Arquivos 
 
 Os arquivos de configuração ficam na pasta **/etc/bind**
-
 
 ![Captura de tela de 2023-03-23 15-49-49](https://user-images.githubusercontent.com/70353348/229380749-b0b8ac3e-d33b-4803-926e-9edd68484cfa.png)
 
@@ -1131,5 +1196,5 @@ Após um tempinho de uso
 
 ## configurando
 
-# Mysql e PHP
+
 
