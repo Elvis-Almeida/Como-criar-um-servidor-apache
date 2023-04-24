@@ -443,7 +443,7 @@ Para vermos o se o MySQL está funcionando vamos ver o status do serviço com `s
 
 ![image](https://user-images.githubusercontent.com/70353348/233845503-a3b8b58f-0527-4e28-b692-f19f736598c6.png)
 
-Vamos instalar também o PhpMyAdmin com o comando `apt install phpmyadmin` após você terminar a instalação basta acessar o menu de configuração que no meu caso é **192.168.43.227/phpmyadmin** 
+Vamos instalar também o PhpMyAdmin com o comando `apt install phpmyadmin`, após você terminar a instalação é só reiniciar o apache com `/etc/init.d/apache2 restart` e agora basta acessar o menu de configuração que no meu caso é **192.168.43.227/phpmyadmin** 
 
 ![image](https://user-images.githubusercontent.com/70353348/233863232-35d78a2c-1ed3-4105-819b-4c7c547fd005.png)
 
@@ -452,9 +452,6 @@ Vamos instalar também o PhpMyAdmin com o comando `apt install phpmyadmin` após
 ![image](https://user-images.githubusercontent.com/70353348/233863571-d5c43de8-7145-4eae-9964-53b1cf16c89e.png)
 
 ![image](https://user-images.githubusercontent.com/70353348/233863591-2928d5c6-a409-44f8-b7fb-672a0f70bc26.png)
-
-
-
 
 # Serviço DNS 
 
@@ -1192,9 +1189,156 @@ Após um tempinho de uso
 
 ## Sobre
 
+IPSec (Internet Protocol Security) é um conjunto de protocolos utilizados para proteger a comunicação de dados em redes IP, ele foi criado para fornecer segurança para a comunicação entre redes, é utilizado em diversas aplicações, incluindo redes privadas virtuais (VPNs), conexões entre filiais de empresas, conexões com fornecedores, entre outras além disso é considerado uma das principais ferramentas para garantir a segurança na transmissão de informações em redes.
+
 ## Instalando
 
-## configurando
+Para iniciarmos vamos instalar o IPSec com o comando `apt-get install strongswan` para baixar e instalar.
 
+## Configurando
+
+Para configurarmos nosso serviço vamos editar o seguinte arquivo `/etc/ipsec.conf`.
+
+![image](https://user-images.githubusercontent.com/70353348/234102530-9c9940a3-4800-4f0c-8f2c-6552894e64f6.png)
+
+Esse serviço a diversas configurações, essa que vou fazer é apenas uma delas e essa condiguração será feita para funcionar somente entre dois computadores, para nosso serviço funcionar corretamente irei configurar duas máquinas, no meu caso usarei mais uma maquina virtual.
+
+Vamos começar pela máquina 1 que será o servidor que estamos instalando todos os serviços.
+
+Nesse arquivo que estamos configurando vamos comentar a linha `config setup` e no final do arquivo adicionar as seguintes configurações:
+
+```
+config setup
+    strictcrlpolicy=yes
+    uniqueids = no
+
+conn %default
+    ikelifetime=60m
+    keylife=20m
+    rekeymargin=3m
+    keyingtries=1
+    keyexchange=ikev2
+
+conn myvpn
+    left=192.168.43.227
+    right=192.168.43.2
+    authby=secret
+    auto=start
+```
+
+Cada configuração dessa significa:
+
+**config setup** - indica o início das configurações do IPSec.
+
+**strictcrlpolicy=yes** - define a política de CRL (Certificate Revocation List) como rigorosa, sendo que a CRL é um conjunto de regras e procedimentos que definem como a lista de revogação de certificados é gerenciada e usada em uma rede de comunicação criptografada.
+
+**uniqueids = no** - Desativa IDs únicos.
+
+Em seguida, temos as configurações das conexões:
+
+**conn %default** - Define as configurações padrão que serão usadas para todas as conexões IPSec.
+
+**ikelifetime=60m** - Define o tempo máximo de vida útil para a negociação de chave IKE (Internet Key Exchange) que é o protocolo de negociação de chaves que utiliza criptografia para garantir a autenticação e a confidencialidade da comunicação.
+
+**keylife=20m** - Define o tempo máximo de vida útil para a chave.
+
+**rekeymargin=3m** - Define o período antes da expiração da chave para iniciar a renegociação.
+
+**keyingtries=1** - Define o número máximo de tentativas de renegociação de chave.
+
+**keyexchange=ikev2** - Define que o protocolo de troca de chaves que será utilizado para estabelecer a conexão VPN será o IKEv2 (Internet Key Exchange version 2). O IKEv2 é um protocolo de segurança que permite a negociação de chaves de criptografia e autenticação para estabelecer conexões VPN seguras entre dois dispositivos.
+
+Por fim, temos a configuração específica da conexão **myvpn**, com as seguintes opções:
+
+**left=192.168.43.227** - Define o endereço IP do lado esquerdo da conexão (ou seja, a origem).
+
+**right=192.168.43.2** - Define o endereço IP do lado direito da conexão (ou seja, o destino).
+
+**authby=secret** - Define que a autenticação será utilizando uma chave secreta compartilhada entre as duas máquinas.
+
+**auto=start:** - inicia a conexão automaticamente no momento do boot.
+
+![image](https://user-images.githubusercontent.com/70353348/234104047-7d5ebb99-6196-434b-81a7-a69e12aae3ec.png)
+
+Agora vamos configurar o arquivo `/etc/ipsec.secrets` adicionando o seguinte código:
+
+```
+192.168.43.227 192.168.43.2 : PSK "pao"
+```
+Aqui colocamos novamente o IP de origem e depois o de destino e logo após PSK (Pre-Shared Key) que significa Chave Pré Compartilhada que é um método de autenticação, vamos digitar a senha que no meu caso coloquei **pao** (*escolha uma senha forte para o seu*).
+
+Agora vamos reiniciar e ver o status do serviço com `/etc/init.d/ipsec restart` e `/etc/init.d/ipsec status`
+
+![image](https://user-images.githubusercontent.com/70353348/234115070-fdf392d6-45c7-45cf-b83e-3783ea10c959.png)
+
+Outro comando para ver o status do serviço é o `watch ipsec statusall` 
+
+![image](https://user-images.githubusercontent.com/70353348/234116277-505d36e8-56aa-455a-9337-b23b696b18c7.png)
+
+Agora vamos configurar a segunda máquina agora
+
+Para configurarmos a segundo máquina será idêntica a primeira, o que muda é os IPs das duas máquinas trocam de lugar nos dois arquivos. No arquivo `/etc/ipsec.conf` você colocará esse código:
+
+```
+config setup
+    strictcrlpolicy=yes
+    uniqueids = no
+
+conn %default
+    ikelifetime=60m
+    keylife=20m
+    rekeymargin=3m
+    keyingtries=1
+    keyexchange=ikev2
+
+conn myvpn
+    left=192.168.43.2
+    right=192.168.43.227
+    authby=secret
+    auto=start
+```
+
+![image](https://user-images.githubusercontent.com/70353348/234120952-3e64e528-8a45-41e7-bd98-60ce36c3061c.png)
+
+
+E no arquivo `/etc/ipsec.secrets` vamos colocar:
+
+```
+192.168.43.2 192.168.43.227 : PSK "pao"
+```
+
+Colocando a mesma senha que a da maquina 1.
+
+![image](https://user-images.githubusercontent.com/70353348/234120873-f18ddd03-6884-4ff2-bb38-18ba480cda86.png)
+
+Após isso é só salvar tudo e reiniciar o serviço com o comando citado anteriormente novamente.
+
+Agora vamos usar o comando `watch ipsec statusall` para vermos se está funcioando.
+
+![image](https://user-images.githubusercontent.com/70353348/234121691-23ebf85b-999d-43e2-a5e1-5cd0f4637c92.png)
+
+Vemos que está funcionando 
+
+---
+
+Fazendo o teste de ping vendo o trafego pelo wireshark
+
+![image](https://user-images.githubusercontent.com/70353348/234122130-ad09f9b2-f1e4-4d38-b018-c29f5c4f6ba7.png)
+
+![image](https://user-images.githubusercontent.com/70353348/234126123-52cd77fe-051c-407f-bb0e-1abc3a09ea04.png)
+
+Agora outro teste sem usar o serviço IPSec
+
+![image](https://user-images.githubusercontent.com/70353348/234126655-ffe3f9af-ad79-4ec4-b44c-1dc49e247aaf.png)
+
+Agora vou acessar o site do servidor pela maquina 2 com IPSec
+
+![image](https://user-images.githubusercontent.com/70353348/234126929-68d2fd3a-528d-4666-8ed1-c3993276279b.png)
+
+Agora sem IPSec
+
+![image](https://user-images.githubusercontent.com/70353348/234127157-bb386020-4c76-4c75-855f-fefb97a5ee52.png)
+
+---
 
 
