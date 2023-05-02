@@ -1226,6 +1226,22 @@ conn myvpn
     auto=start
 ```
 
+```
+config setup
+        strictcrlpolicy=yes
+        uniqueids = no
+
+conn myvpn
+        authby=secret
+        auto=start
+        keyexchange=ikev2
+        left=192.168.43.227
+        right=192.168.43.2
+        type=transport
+        esp=aes256-sha2_256!
+
+```
+
 Cada configuração dessa significa:
 
 **config setup** - indica o início das configurações do IPSec.
@@ -1236,15 +1252,9 @@ Cada configuração dessa significa:
 
 Em seguida, temos as configurações das conexões:
 
-**conn %default** - Define as configurações padrão que serão usadas para todas as conexões IPSec.
+**authby=secret** - Define que a autenticação será utilizando uma chave secreta compartilhada entre as duas máquinas.
 
-**ikelifetime=60m** - Define o tempo máximo de vida útil para a negociação de chave IKE (Internet Key Exchange) que é o protocolo de negociação de chaves que utiliza criptografia para garantir a autenticação e a confidencialidade da comunicação.
-
-**keylife=20m** - Define o tempo máximo de vida útil para a chave.
-
-**rekeymargin=3m** - Define o período antes da expiração da chave para iniciar a renegociação.
-
-**keyingtries=1** - Define o número máximo de tentativas de renegociação de chave.
+**auto=start:** - inicia a conexão automaticamente no momento do boot.
 
 **keyexchange=ikev2** - Define que o protocolo de troca de chaves que será utilizado para estabelecer a conexão VPN será o IKEv2 (Internet Key Exchange version 2). O IKEv2 é um protocolo de segurança que permite a negociação de chaves de criptografia e autenticação para estabelecer conexões VPN seguras entre dois dispositivos.
 
@@ -1254,11 +1264,11 @@ Por fim, temos a configuração específica da conexão **myvpn**, com as seguin
 
 **right=192.168.43.2** - Define o endereço IP do lado direito da conexão (ou seja, o destino).
 
-**authby=secret** - Define que a autenticação será utilizando uma chave secreta compartilhada entre as duas máquinas.
+**type=transport** - define que o IPsec operará no modo de transporte, que é usado para proteger o tráfego de um único protocolo entre duas máquinas.
 
-**auto=start:** - inicia a conexão automaticamente no momento do boot.
+**esp=aes256-sha2_256!** - define o algoritmo de criptografia e o algoritmo de autenticação de integridade que serão usados para proteger o tráfego sendo o **aes256** o algoritmo de criptografia de 256 bits que protege o conteúdo do pacote IP, enquanto o **sha2_256** é o algoritmo de autenticação que verifica a integridade do pacote IP, já a exclamação **!** no final significa que a configuração não permite o uso de qualquer outro algoritmo de criptografia ou autenticação.
 
-![image](https://user-images.githubusercontent.com/70353348/234104047-7d5ebb99-6196-434b-81a7-a69e12aae3ec.png)
+![image](https://user-images.githubusercontent.com/70353348/235557001-7fc85fe4-2f50-47db-9684-7cdcc2b3941b.png)
 
 Agora vamos configurar o arquivo `/etc/ipsec.secrets` adicionando o seguinte código:
 
@@ -1281,24 +1291,20 @@ Para configurarmos a segundo máquina será idêntica a primeira, o que muda é 
 
 ```
 config setup
-    strictcrlpolicy=yes
-    uniqueids = no
-
-conn %default
-    ikelifetime=60m
-    keylife=20m
-    rekeymargin=3m
-    keyingtries=1
-    keyexchange=ikev2
+         strictcrlpolicy=yes
+         uniqueids = no
 
 conn myvpn
-    left=192.168.43.2
-    right=192.168.43.227
-    authby=secret
-    auto=start
+        authby=secret
+        auto=start
+        keyexchange=ikev2
+        left=192.168.43.2
+        right=192.168.43.227
+        type=transport
+        esp=aes256-sha2_256!
 ```
 
-![image](https://user-images.githubusercontent.com/70353348/234120952-3e64e528-8a45-41e7-bd98-60ce36c3061c.png)
+![image](https://user-images.githubusercontent.com/70353348/235557127-b4b12bca-39d8-455c-8add-20b7e53c15c8.png)
 
 
 E no arquivo `/etc/ipsec.secrets` vamos colocar:
@@ -1311,7 +1317,7 @@ Colocando a mesma senha que a da maquina 1.
 
 ![image](https://user-images.githubusercontent.com/70353348/234120873-f18ddd03-6884-4ff2-bb38-18ba480cda86.png)
 
-Após isso é só salvar tudo e reiniciar o serviço com o comando citado anteriormente novamente.
+Após isso é só salvar tudo e reiniciar o serviço com o comando citado anteriormente.
 
 Agora vamos usar o comando `watch ipsec statusall` para vermos se está funcioando.
 
@@ -1325,7 +1331,7 @@ Fazendo o teste de ping vendo o trafego pelo wireshark
 
 ![image](https://user-images.githubusercontent.com/70353348/234122130-ad09f9b2-f1e4-4d38-b018-c29f5c4f6ba7.png)
 
-![image](https://user-images.githubusercontent.com/70353348/234126123-52cd77fe-051c-407f-bb0e-1abc3a09ea04.png)
+![image](https://user-images.githubusercontent.com/70353348/235555287-edc2854f-c049-4dbb-aa2c-f8dccf84c066.png)
 
 Agora outro teste sem usar o serviço IPSec
 
@@ -1333,7 +1339,7 @@ Agora outro teste sem usar o serviço IPSec
 
 Agora vou acessar o site do servidor pela maquina 2 com IPSec
 
-![image](https://user-images.githubusercontent.com/70353348/234126929-68d2fd3a-528d-4666-8ed1-c3993276279b.png)
+![image](https://user-images.githubusercontent.com/70353348/235556615-9ebeac45-72b1-4134-985f-178ad954091a.png)
 
 Agora sem IPSec
 
@@ -1341,4 +1347,32 @@ Agora sem IPSec
 
 ---
 
+# Webmin
 
+![image](https://user-images.githubusercontent.com/70353348/235559162-2c98c424-63c6-42c5-af6e-0ffafc35f7ff.png)
+
+## Sobre
+
+## Instalando
+
+## Detalhes
+
+# Monitorix
+
+![image](https://user-images.githubusercontent.com/70353348/235559091-b3d56feb-ecb8-47ac-8c05-5d11b3abc7b6.png)
+
+## Sobre
+
+## Instalando
+
+## Detalhes
+
+# HTTPS
+
+![image](https://user-images.githubusercontent.com/70353348/235558975-2d5cab4a-269e-4631-ab78-5e851e22f33c.png)
+
+## Sobre
+
+## Instalando
+
+## Configurando
