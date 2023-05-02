@@ -1343,7 +1343,7 @@ Agora vou acessar o site do servidor pela maquina 2 com IPSec
 
 Agora sem IPSec
 
-![image](https://user-images.githubusercontent.com/70353348/234127157-bb386020-4c76-4c75-855f-fefb97a5ee52.png)
+![image](https://user-images.githubusercontent.com/70353348/235559703-f394cb9c-252b-4349-a671-939313ea09e1.png)
 
 ---
 
