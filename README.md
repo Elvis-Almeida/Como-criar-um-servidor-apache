@@ -1209,25 +1209,6 @@ Nesse arquivo que estamos configurando vamos comentar a linha `config setup` e n
 
 ```
 config setup
-    strictcrlpolicy=yes
-    uniqueids = no
-
-conn %default
-    ikelifetime=60m
-    keylife=20m
-    rekeymargin=3m
-    keyingtries=1
-    keyexchange=ikev2
-
-conn myvpn
-    left=192.168.43.227
-    right=192.168.43.2
-    authby=secret
-    auto=start
-```
-
-```
-config setup
         strictcrlpolicy=yes
         uniqueids = no
 
@@ -1239,7 +1220,6 @@ conn myvpn
         right=192.168.43.2
         type=transport
         esp=aes256-sha2_256!
-
 ```
 
 Cada configuração dessa significa:
