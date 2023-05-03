@@ -1574,4 +1574,10 @@ Usando `ifconfig` podemos ver o ip do túneo que a VPN criou para se comunicar c
 
 ![image](https://user-images.githubusercontent.com/70353348/236071828-90c8ce3b-ea8b-4260-afa5-60c0331bb715.png)
 
-Que bom que chegou até aqui, chegamos ao fim de nossa jornada, mas não vá embora aproveite e veja mais em [Elvis Rodrigues Almeida](https://github.com/Elvis-Almeida) :rocket:
+Caso queiram Adicionar um novo cliente, remover um cliente ou remover o serviço de VPN do seu servidor basta executar o arquivo de instalação novamente com o comando `bash openvpn-install.sh` na pasta onde você baixou o arquivo e selecionar a opção que deseja.
+
+![image](https://user-images.githubusercontent.com/70353348/236072686-8b3a17cd-d1d6-448b-bb29-b7fc09524786.png)
+
+
+Que bom que chegou até aqui, chegamos ao fim de nossa jornada, mas não vá embora aproveite e veja mais em [Elvis Rodrigues Almeida](https://github.com/Elvis-Almeida) :rocket: Até mais!!
+
