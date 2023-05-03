@@ -1329,27 +1329,128 @@ Agora sem IPSec
 
 # Webmin
 
-![image](https://user-images.githubusercontent.com/70353348/235559162-2c98c424-63c6-42c5-af6e-0ffafc35f7ff.png)
-
 ## Sobre
 
+Webmin é um painel de controle web de código aberto que permite administrar de forma fácil e intuitiva servidores linux.
+
+Entre as principais funcionalidades do Webmin estão:
+
+ - Gerenciamento de usuários e grupos
+ - Configuração de serviços de rede, como Apache, DNS, SSH, FTP, entre outros
+ - Configuração de firewalls e sistemas de segurança
+ - Monitoramento de recursos de hardware, como uso de CPU, memória e disco
+ - Configuração de backups e restauração de dados
+ - Gerenciamento de bancos de dados, como MySQL e PostgreSQL
+ - Gerenciamento de arquivos e diretórios
+ 
 ## Instalando
 
+Para instalar o webmin basta digitar esse comando `curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh` e após executar esse comando `sh setup-repos.sh` após finalizar esse comando agora é só digitar `apt-get install webmin` após executar esse comando seu Webmin estará funcionando.
+
 ## Detalhes
+
+Para acessar o Webmin é só digitar o seu ip na porta 10000 no meu caso `192.168.43.227:10000`, ao você acessar a página aparecerá esse aviso, mas não se preocupe, esse aviso apenas aparece pois o Webmin usa o protocolo **HTTPS** no qual a comunicação é criptgrafada, mas todo site que tem **HTTPS** para ser considerado seguro pelo navegador ele precisa da autênticação de terceiros e como no nosso caso não temos, o navegador considera inseguro, mas na verdade ele é seguro porém só não é autênticado.
+
+Para passar dessa parte é só selecionar **avançado** e depois em **clicar em Ir para 192.168.43.227 (não seguro)**.
+
+![image](https://user-images.githubusercontent.com/70353348/236026663-e213f404-d5dc-4ea3-858c-b36acd0ae39e.png)
+
+Na página de login vamos entrar com o usuário e senha do sistema, ou seja, a mesma que você usa para entrar no servidor.
+
+![image](https://user-images.githubusercontent.com/70353348/236030663-dd7cfa0d-fbde-4b20-8305-f811930a749b.png)
+
+Essa é a página inicial onde vemos o Dashboard, nela já podemos ver várias informações importantes como:
+
+
+> Nome do host do sistema
+
+> Sistema operacional	
+
+> Kernel e CPU	
+
+> Informações do processador
+
+> Tempo de atividade do sistema	
+
+> Processos em execução	
+
+![image](https://user-images.githubusercontent.com/70353348/235559162-2c98c424-63c6-42c5-af6e-0ffafc35f7ff.png)
+
+Indo no menu em servidores podemos ver os servidores que instalamos durante nossa jornada.
+
+![image](https://user-images.githubusercontent.com/70353348/236032915-93a05dd0-1f4a-4b72-8463-13f69ab8afca.png)
+
+Acessando o serviço de DHCP podemos ver as configurações que fizemos anteriormente
+
+![image](https://user-images.githubusercontent.com/70353348/236033844-1243d47c-541b-435f-8bee-c35063a7a128.png)
+
+Acessando a rede 192.168.43.0 que configuramos vemos mais detalhes 
+
+![image](https://user-images.githubusercontent.com/70353348/236033937-048d84be-18d4-452e-9f80-7d748be6ab0b.png)
+
+Acessando o serviço de proxy com squid vemos diversas configurações que podem ser feitas e ver as que já fizemos 
+
+![image](https://user-images.githubusercontent.com/70353348/236035094-23139d6a-f19f-45c1-912e-c7f73e5ca174.png)
+
+Podemos até editar o arquivo de configuração do serviço por aqui em **editor de arquivos de configuração** 
+
+![image](https://user-images.githubusercontent.com/70353348/236035457-3bc032af-517a-4eb9-a935-f703fb7e2e96.png)
+
+Caso o seu venha em outro idioma é só ir neste local para alterar para o idioma português. 
+
+![image](https://user-images.githubusercontent.com/70353348/236036544-cb31e034-c12a-4b24-bfbf-8fa268bdbf73.png)
+
+O webmin é um gerenciador completo para seu servidor, existem diversas funcionalidades, aqui apenas mostrei uma pequena amostra dele, fique avontade para usar e explorar melhor essa ferrementa muito legal.
 
 # Monitorix
 
-![image](https://user-images.githubusercontent.com/70353348/235559091-b3d56feb-ecb8-47ac-8c05-5d11b3abc7b6.png)
-
 ## Sobre
+
+Monitorix é uma ferramenta de monitoramento de sistema de código aberto que fornece uma visão geral de alto nível do desempenho do sistema e da rede em tempo real, usa um servidor web integrado para exibir suas informações através de uma interface web, é projetado para ser leve e fácil de usar, e pode ser usado em varios sistemas operacionais, incluindo Linux, BSD, Solaris e macOS.
+
+Entre as informações que o Monitorix pode fornecer estão o uso de CPU, memória e disco, tráfego de rede, status do serviço e temperatura da CPU, entre outros.
 
 ## Instalando
 
+Para instalar o monitorix basta digitar esse comando `sudo apt install monitorix` que o serviço será instlado 
+
 ## Detalhes
+
+Após instalado para acessar o serviço é só ir no ip do seu site na porta 8080/monitorix no meu caso ficou assim `192.168.43.227:8080/monitorix`. Ao entrar pela primeira vez seu monitorix estará limpo, pois ele ainda não tem dados suficientes para exibir.
+
+![image](https://user-images.githubusercontent.com/70353348/236040442-b38a9320-869a-42f7-abde-627148fd2ff5.png)
+
+Comforme você for usando irá aparecer os dados do uso do seu servidor.
+
+![image](https://user-images.githubusercontent.com/70353348/235559091-b3d56feb-ecb8-47ac-8c05-5d11b3abc7b6.png)
+
+Ele exibe diversos gráficos como:
+
+> Uso da CPU
+
+> Uso da memória
+
+> Uso de disco
+
+> Uso de rede (taxa de transferência, pacotes, erros)
+
+> Atividade do sistema (processos em execução, interrupções)
+
+Entre outros
+
+![image](https://user-images.githubusercontent.com/70353348/236041425-f66eeedf-d85a-49f5-9c63-5c18d952d61a.png)
 
 # HTTPS
 
 ![image](https://user-images.githubusercontent.com/70353348/235558975-2d5cab4a-269e-4631-ab78-5e851e22f33c.png)
+
+## Sobre
+
+## Instalando
+
+## Configurando
+
+# VPN
 
 ## Sobre
 
