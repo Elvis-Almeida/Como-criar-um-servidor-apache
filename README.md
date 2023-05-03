@@ -1438,20 +1438,140 @@ Entre outros
 
 ![image](https://user-images.githubusercontent.com/70353348/236041425-f66eeedf-d85a-49f5-9c63-5c18d952d61a.png)
 
-# HTTPS
-
-![image](https://user-images.githubusercontent.com/70353348/235558975-2d5cab4a-269e-4631-ab78-5e851e22f33c.png)
+# SSL
 
 ## Sobre
 
+SSL (Secure Sockets Layer) é um protocolo de segurança que fornece criptografia e autenticação de informações transmitidas pela internet, ele atua quando um usuário acessa o site fazendo o navegador estabelecer uma conexão segura com o servidor por meio de criptografia de chave pública, isso garante que as informações transmitidas entre o navegador e o servidor sejam protegidas contra interceptação e roubo por terceiros.
+
 ## Instalando
 
+Para instalar o SSL basta digitar esse comando `apt-get install openssl` que o SSL será instalado em seu servidor.
+
 ## Configurando
+
+Para iniciar nossas configurações vamos primeiro habilitar nosso SSL no apache com o comando `a2enmod ssl` e agora vamos reiniciar o serviço, dessa vez iremos utilizar o comando `systemctl restart apache2` para reiniciar o apache.
+
+![image](https://user-images.githubusercontent.com/70353348/236050389-102a74ae-4f4d-457b-9791-a9d2c77fb0e7.png)
+
+Agora vamos criar a pasta **ssl** dentro da pasta do apache com esse comando `mkdir /etc/apache2/ssl`, será nessa pasta onde colocaremos nossos certificados.
+
+![image](https://user-images.githubusercontent.com/70353348/236053510-8c37552b-9a7a-4165-9473-f91df3682c9e.png)
+
+Agora vamos criar nossos certificados com o comando 
+`openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/apache2/ssl/elvis.key -out /etc/apache2/ssl/elvis.crt`
+
+Onde:
+
+**openssl** - é o comando do serviço ssl
+
+**req** - Define que será realizada uma solicitação de certificado.
+
+**-x509** - Define que será gerado um certificado autoassinado, ou seja, sem a intervenção de uma autoridade certificadora.
+
+**-nodes** - Define que a chave privada não será criptografada com uma senha, facilitando sua utilização.
+
+**-days 365** - Define o prazo de validade do certificado autoassinado será de 365 dias.
+
+**-newkey rsa:4096** - Define que será gerada uma nova chave privada RSA de 4096 bits.
+
+**-keyout /etc/apache2/ssl/elvis.key** - Define o caminho e o nome do arquivo que conterá a chave privada gerada.
+
+**-out /etc/apache2/ssl/elvis.crt** - especifica o caminho e o nome do arquivo que conterá o certificado autoassinado gerado.
+
+Após executar o comando ele irá iniciar um formulário para você completar com algumas informações, como nosso servidor é para fins de aprendizado não colocarei as informações corretas, mas caso você faça isso em um servidor de produção recomenda-se inserir informações corretas.  
+
+![image](https://user-images.githubusercontent.com/70353348/236058319-574049bd-e03e-4b39-8ee0-fa1f912eda99.png)
+
+![image](https://user-images.githubusercontent.com/70353348/236059124-dd2e1419-24f1-49af-8ff7-e7115df943fc.png)
+
+Acessando a pasta vemos os nossos certificados criados.
+
+![image](https://user-images.githubusercontent.com/70353348/236059508-bcdfbebc-bb88-4b2a-bcb6-4a9e3c2a8293.png)
+
+![image](https://user-images.githubusercontent.com/70353348/236059681-a14e485b-d8a5-4a98-9ebb-264d4a65aa29.png)
+
+![image](https://user-images.githubusercontent.com/70353348/236059722-0b617321-3ac9-41f5-9829-1b18e5d4c380.png)
+
+Após criado vamos acessar a configuração do nosso ssl com o comando `nano /etc/apache2/sites-available/default-ssl.conf`, e em **SSLCertificateFile** vamos passar o endereço do nosso certificado e em **SSLCertificateKeyFile**
+ vamos passa o endereço da nossa chave privada, no meu caso `/etc/apache2/ssl/pao.crt` e `/etc/apache2/ssl/pao.key` respectivamente. 
+
+![image](https://user-images.githubusercontent.com/70353348/236060332-bb2ae94d-8ce5-4466-8dc4-989b96c4ee08.png)
+
+> :warning: após toda essa configuração não esqueça de reiniciar o serviço!
+
+O site apresentará o mesmo aviso citado anteriormente, mas é só aceitar os riscos para poder abrir o site.      
+
+![image](https://user-images.githubusercontent.com/70353348/236062878-f537a0e3-03fe-4091-a7e7-3d7fb5d49cc4.png)
+
+E agora temos nosso site funcionando com HTTPS com o nosso certificado SSL
+
+![image](https://user-images.githubusercontent.com/70353348/236063286-793bfddc-d992-4df8-ab94-6a07e09fd3cc.png)
+
+No Firefox podemos ver nosso certificado clicando no cadeado ao lado do link e depois clicando em **connection not secury** depois em **more information** e por último em **view certificate** 
+
+![image](https://user-images.githubusercontent.com/70353348/236063668-4c33ec06-8c7a-4899-b83c-a800ddfbbb56.png)
+
+Após isso abrirá a página com as informações sobre o seu certificado, e aquele formulário que preenchemos aparecerá as informações aqui.
+
+![image](https://user-images.githubusercontent.com/70353348/236064676-fd1c7b8c-a0c4-44a8-8886-fe3aed4b4d3c.png)
+
+:rocket:
 
 # VPN
 
 ## Sobre
 
+VPN (Virtual Private Network) é uma tecnologia que permite a conexão segura entre dois dispositivos ou redes através da Internet, o objetivo principal da VPN é garantir a privacidade e segurança dos dados transmitidos pela rede, criando um "túnel" criptografado entre os dispositivos, dessa forma é possivel mascarar seu ip real trazendo mais segurança ao navegar pela internet.
+
 ## Instalando
 
+Para instalarmos usaremos esse comando `wget https://git.io/vpn -O openvpn-install.sh && bash openvpn-install.sh`, ele irá baixar e iniciar a instalação.
+
 ## Configurando
+
+Ele tem um pequeno formulário de configuração de instalação onde primeiro ele irá perguntar o ip da sua máquina, no meu caso o ip da minha máquina é `192.168.43.227`
+
+A segunda pergunta é qual protocolo de comunicação você irá utilizar, escolhi UDP como recomendado pois esse protocolo tem uma comunicação mais veloz.
+
+A terceira opção pergunta qual porta você irá utilizar, apertando `enter` sem digitar nada ele define a porta 1194, foi o que eu fiz.
+
+A quarta opção pergunta qual o DNS que seu cliente usará, no meu caso escolhi a opção 3
+
+E por fim ele pergunta qual o nome do cliente, nesse caso fica a seu critério qual nome você colocará.
+
+![Captura de tela de 2023-05-02 22-54-58](https://user-images.githubusercontent.com/70353348/236066832-f42cb64b-3aea-4aaa-9950-5d53788771c3.png)
+
+Após isso ele criará o arquivo de configuração do seu cliente que ficará na pasta `/root`, agora é só enviar para seu cliente esse arquivo no qual ele importará em seu sistema.
+
+![image](https://user-images.githubusercontent.com/70353348/236068740-fbe2bf9c-01d8-4d50-bc84-68fec1117294.png)
+
+No PopOs podemos fazer essa importação somente indo na configurações do sistema, depois em Rede e é só clicar no **+** na VPN
+
+![image](https://user-images.githubusercontent.com/70353348/236069184-67aad8ac-eaba-40ac-bc4c-32b57ba0a881.png)
+
+Após isso é só clicar em **importar de arquivo** 
+
+![image](https://user-images.githubusercontent.com/70353348/236069578-cb722f14-7df1-475e-89cb-497d17ff9d2c.png)
+
+Selecionar seu arquivo 
+
+![image](https://user-images.githubusercontent.com/70353348/236069694-0ee8b160-4754-45ba-9a05-b6eb4d3f6c72.png)
+
+E clicar em adicionar
+
+![image](https://user-images.githubusercontent.com/70353348/236070016-996412f2-a603-4865-afdb-893949b2741c.png)
+
+Agora é só ligar sua VPN e usar avontade
+
+![image](https://user-images.githubusercontent.com/70353348/236070370-f2230ffc-dffb-4fc9-a9a5-84659aa4b91d.png)
+
+Vendo Trafego de rede usando VPN, podemos ver que todos os pacotes são criptografados 
+
+![image](https://user-images.githubusercontent.com/70353348/236071541-0bd15d06-bd10-4172-b97d-333662a3cd32.png)
+
+Usando `ifconfig` podemos ver o ip do túneo que a VPN criou para se comunicar com o servidor
+
+![image](https://user-images.githubusercontent.com/70353348/236071828-90c8ce3b-ea8b-4260-afa5-60c0331bb715.png)
+
+Que bom que chegou até aqui, chegamos ao fim de nossa jornada, mas não vá embora aproveite e veja mais em [Elvis Rodrigues Almeida](https://github.com/Elvis-Almeida) :rocket:
