@@ -1438,7 +1438,7 @@ Entre outros
 
 ![image](https://user-images.githubusercontent.com/70353348/236041425-f66eeedf-d85a-49f5-9c63-5c18d952d61a.png)
 
-# SSL
+# Serviço SSL
 
 ## Sobre
 
@@ -1518,7 +1518,7 @@ Após isso abrirá a página com as informações sobre o seu certificado, e aqu
 
 :rocket:
 
-# VPN
+# Serviço VPN
 
 ## Sobre
 
