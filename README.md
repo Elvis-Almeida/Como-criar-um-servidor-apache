@@ -1406,9 +1406,7 @@ O webmin é um gerenciador completo para seu servidor, existem diversas funciona
 
 ## Sobre
 
-Monitorix é uma ferramenta de monitoramento de sistema de código aberto que fornece uma visão geral de alto nível do desempenho do sistema e da rede em tempo real, usa um servidor web integrado para exibir suas informações através de uma interface web, é projetado para ser leve e fácil de usar, e pode ser usado em varios sistemas operacionais, incluindo Linux, BSD, Solaris e macOS.
-
-Entre as informações que o Monitorix pode fornecer estão o uso de CPU, memória e disco, tráfego de rede, status do serviço e temperatura da CPU, entre outros.
+Monitorix é uma ferramenta de monitoramento de sistema de código aberto que fornece uma visão geral de alto nível do desempenho do sistema e da rede em tempo real, usa um servidor web integrado para exibir suas informações através de uma interface web, é projetado para ser leve e fácil de usar, e pode ser usado em varios sistemas operacionais, incluindo Linux, BSD, Solaris e macOS, entre as informações que ele pode fornecer estão o uso de CPU, memória e disco, tráfego de rede, status do serviço e temperatura da CPU, entre outros.
 
 ## Instalando
 
@@ -1420,7 +1418,7 @@ Após instalado para acessar o serviço é só ir no ip do seu site na porta 808
 
 ![image](https://user-images.githubusercontent.com/70353348/236040442-b38a9320-869a-42f7-abde-627148fd2ff5.png)
 
-Comforme você for usando irá aparecer os dados do uso do seu servidor.
+Conforme você for usando irá aparecer os dados do uso do seu servidor.
 
 ![image](https://user-images.githubusercontent.com/70353348/235559091-b3d56feb-ecb8-47ac-8c05-5d11b3abc7b6.png)
 
